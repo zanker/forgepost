@@ -1,0 +1,27 @@
+-#.row
+-#  .span12
+-#    #logo
+-#      = image_tag("logo-full.png")
+
+.row
+  .span12
+    %h3.header= t(".news")
+
+- @posts.each do |post|
+  .row
+    .span12
+      .well.well-small.well-trimmed
+        .header
+          %h4
+            = link_to(post.title, news_show_path(post.slug))
+          .posted= relative_time(post.created_at, :ago)
+          .clearfix
+
+        - if post.short_body?
+          %p!= post.short_body
+          %p= link_to(t(".read_more"), news_show_path(post.slug))
+
+        - else
+          %p!= post.body
+
+= build_pagination(@posts.count, CONFIG[:limits][:news])

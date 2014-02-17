@@ -1,0 +1,14 @@
+en:
+  tooltips:
+    show:
+      embedded: Tooltips can easily be embedded into your website. Once you embed the Javascript library, any link to ForgePost will automatically show an appropriate tooltip.
+      setup: Setup
+      examples: Examples
+      below_examples: The below are examples of links you can mouse over to view a tooltip. These are the same tooltips you can get on your own website.
+      all_levels: All levels shown at once
+      level_1_3: Levels 1 and 3 shown at once
+      level_3: Level 3 shown
+      without_embed: If you don't have jQuery, you will need to copy and paste the below into your sites HTML to enable tooltips.
+      with_embed: Already have jQuery? Just copy and paste the below into your sites HTML and you're done.
+      config: Configuration
+      add_above: You can configure a few parts of the tooltips, just add the script above the tooltip include.

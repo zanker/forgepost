@@ -1,0 +1,17 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 27017
+  options:
+    :pool_size: <%= RUBY_PLATFORM == "java" ? 30 : 1 %>
+
+development:
+  <<: *defaults
+  database: forgepost_development
+
+test:
+  <<: *defaults
+  database: forgepost_test
+
+production: &production
+  <<: *defaults
+  database: forgepost_production

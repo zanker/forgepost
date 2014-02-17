@@ -1,0 +1,94 @@
+= content_for :header do
+  .well.well-small.well-trimmed
+    %ul
+      %li
+        .label= t("cards.show.name")
+        .text= render_card_data(:name, 0)
+
+      %li
+        .label= t("cards.show.faction")
+        .text
+          = render_card_data(:faction, 0) do |card|
+            = link_to(t("factions.#{card.faction}"), cards_index_search_path(:factions => card.faction), :class => "faction-#{card.faction}")
+
+      %li
+        .label= t("cards.show.rarity")
+        .text
+          = render_card_data(:rarity, 0) do |card|
+            - if !card.token?
+              %div{:class => "rarities rarity-#{Card::RARITY_IMAGE_MAPS[card.rarity]} size-20"}
+              %span{:class => "rarity-#{card.rarity}"}= t("rarities.#{card.rarity}")
+            - else
+              %div{:class => "rarities rarity-token rarity-0 size-20"}
+              %span{:class => "rarity-token"}= t("rarities.token")
+
+
+= render_block("show_base") do
+  - @card_levels.each_index do |index|
+    - card = @card_levels[index]
+    - next if card.total_changes == 0
+    - changes = card.fields_changed - ["name", "faction", "rarity"]
+    - next if changes.empty?
+
+    .row#history
+      .span12
+        %h4= t("level_long", :level => card.level)
+        .well.well-small.well-trimmed
+          %ul
+            - if card_changed?(:image_id, index)
+              %li
+                .label= t("cards.show.image")
+                .text= t("cards.show.changed")
+
+            - if card_changed?(:category, index)
+              %li
+                .label= t("cards.show.category")
+                .text
+                  = render_card_data(:category, index) do |card|
+                    = t("categories.#{card.category}")
+
+            - if card_changed?(:creature_type, index)
+              %li
+                .label= t("cards.show.creature_type")
+                .text
+                  = render_card_data(:creature_type, index)
+
+            - if @card.has_stats?
+              - if card_changed?(:hp, index)
+                %li
+                  .label= t("cards.show.health")
+                  .text= render_card_data(:hp, index)
+              - if card_changed?(:attack, index)
+                %li
+                  .label= t("cards.show.attack")
+                  .text= render_card_data(:attack, index)
+
+            - if card_changed?(:static_text, index)
+              %li
+                .label= t("cards.show.passives")
+                .text
+                  = render_card_data(:static_text, index) do |card|
+                    .misc!= card.static_text.map {|t| parse_text(card, t)}.join(" / ")
+
+            - if card_changed?(:static_abilities, index)
+              %li
+                .label= t("cards.show.abilities")
+                .text
+                  = render_card_data(:static_abilities, index) do |card|
+                    .abilities!= card.static_abilities.map {|t| parse_ability(card, t)}.join
+
+            - if card_changed?(:static_keywords, index)
+              %li
+                .label= t("cards.show.keywords")
+                .text
+                  = render_card_data(:static_keywords, index) do |card|
+                    .keywords!= card.static_keywords.map {|t| parse_keyword(card, t)}.join
+
+
+
+  .row#cards
+    - @card_levels.each do |card|
+      .span4
+        = render :partial => "full_card", :locals => {:card => card, :alt => @alt}
+
+  .clearfix

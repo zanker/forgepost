@@ -1,0 +1,153 @@
+!!!
+%html{:lang => :en}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:name => :viewport, :content => "width=device-width, initial-scale=1.0"}
+    %meta{:property => "og:url", :content => request.url}
+    %meta{:property => "og:type", :content => "website"}
+    %meta{:property => "og:site_name", :content => "ForgePost"}
+    -#%meta{:property => "og:image", :content => image_url("icon-128.png")}
+    -#%link{:rel => "apple-touch-icon", :content => image_url("apple-touch-icon.png")}
+
+    %link{:rel => "shortcut icon", :href => "/favicon.ico"}
+    != title_tags
+    != page_description_tags
+
+    = csrf_meta_tags
+    = stylesheet_link_tag(params[:controller] =~ /^usercp/ ? :usercp : :application, :media => "all")
+
+    = javascript_include_tag(params[:controller] =~ /^usercp/ ? :usercp : :application)
+    = yield :head if content_for?(:head)
+
+    - if Rails.env.production?
+      = javascript_include_tag("http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", :async => true)
+      :javascript
+        (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+        typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);
+        b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+        mixpanel.init("#{CONFIG[:mixpanel]}");
+        mixpanel.identify("#{analytics_id}");
+        mixpanel.track("#{params[:controller].humanize} -> #{params[:action].humanize}");
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '']);
+        _gaq.push(['_trackPageview']);
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+    - else
+      :javascript
+        window.mixpanel = {track: function(){}, track_links: function() {}, register: function() {}, register_once: function() {}, register: function() {}};
+
+%body
+  .wrapper
+    .navbar
+      .navbar-inner
+        .container
+          -#%a.brand{:href => root_path}
+          -#  &nbsp;
+
+          %ul.nav
+            %li{:class => active_class("cards")}
+              = link_to(t(".cards"), cards_index_path)
+
+            %li{:class => active_class("deckbuilders")}
+              = link_to(t(".deckbuilder"), deckbuilder_path)
+
+            %li{:class => active_class("references")}
+              = link_to(t(".solforge_reference"), references_keywords_path)
+
+            %li{:class => active_class("game_patches")}
+              = link_to(t(".game_patches"), patches_path)
+
+            %li{:class => active_class("products")}
+              = link_to(t(".card_specials"), products_card_path)
+
+
+          %ul.nav.pull-right
+            %li{:class => active_class("tooltips")}
+              = link_to(t(".tooltips"), tooltips_path)
+
+            %li{:class => active_class("news")}
+              %a{:href => news_index_path}
+                = t(".news")
+                - unless cookies.signed[:nt] == Post.last_post
+                  %span.text-success [ ! ]
+
+            - if !user_signed_in?
+              %li.divider-vertical
+              %li{:class => active_class("sessions")}
+                %a#login-link{:href => new_session_path}
+                  %span= t(".login_with")
+                  - CONFIG[:oauth].each_key do |provider|
+                    %div{:class => "#{provider} size-16"}
+
+            - else
+              %li.divider-vertical
+              %li.dropdown{:class => active_class("usercp/settings")}
+                %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+                  = t(".account")
+                  %strong.caret
+                %ul.dropdown-menu
+                  -#%li{:class => active_class("usercp/settings", "edit")}= link_to(t(".settings"), edit_usercp_settings_path)
+                  -#%li.divider
+                  %li= link_to(t(".logout"), session_logout_path)
+
+    .container{:id => "#{params[:controller]}_#{params[:action]}".gsub("/", "_")}
+      - if Rails.env.production? and response.status == 200 and params[:controller] != "news" and params[:controller] !~ /^usercp/ and params[:controller] != "sessions"
+        - @first_ad = true
+        .gabagt{"style" => "background-image: none"}
+          %ins.adsbygoogle{:style => "display:block;width:970px;height:90px", "data-ad-client" => "", "data-ad-slot" => ""}
+
+      - if flash[:alert]
+        .alert.alert-error
+          .close x
+          %strong= flash[:alert]
+      - elsif flash[:notice]
+        .alert.alert-info
+          .close x
+          %strong= flash[:notice]
+      - elsif flash[:success]
+        .alert.alert-success
+          .close x
+          %strong= flash[:success]
+
+      - if user_signed_in?
+        %noscript
+          .alert.alert-error
+            %strong!= t(".noscript", :email => mail_to(CONFIG[:contact][:email]))
+
+      = yield
+
+      - if Rails.env.production? and response.status == 200 and params[:controller] == "cards" and params[:action] == "index"
+        - @second_ad = true
+        .gabagt{"style" => "background-image: none"}
+          %ins.adsbygoogle{:style => "display:block;width:970px;height:90px", "data-ad-client" => "", "data-ad-slot" => ""}
+
+    .push
+
+  #preloader
+    .a &nbsp;
+    .b &nbsp;
+
+  %footer.container
+    %p.pull-left &copy; 2013 - 2014 ForgePost
+    %ul.pull-right.unstyled
+      -#%li= link_to(t(".twitter"), "https://twitter.com/ForgePost")
+      %li= mail_to(CONFIG[:contact][:email], t(".contact_us"))
+      -#%li
+      -#  %span &middot;
+      -#%li
+      -#  = link_to(t(".faq"), faq_index_path)
+
+      -#%li
+      -#  %span &middot;
+      -#%li= link_to(t(".terms"), terms_conditions_path)
+      %li
+        %span &middot;
+      %li= link_to(t(".privacy_policy"), privacy_policy_path)
+
+  :javascript
+    (adsbygoogle = window.adsbygoogle || []);#{@first_ad ? "adsbygoogle.push({});" : ""}#{@second_ad ? "adsbygoogle.push({});" : ""}
+    ForgePost.initialize();
+    if( ForgePost.PAGES['#{params[:controller]}/#{params[:action]}'] ) ForgePost.PAGES['#{params[:controller]}/#{params[:action]}']();

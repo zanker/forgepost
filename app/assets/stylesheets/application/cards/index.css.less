@@ -1,0 +1,74 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+#cards_index {
+  table {
+    td {
+      vertical-align: middle;
+    }
+
+    .icon {
+      width: 40px;
+    }
+
+    .name {
+      width: 20%;
+      cursor: pointer;
+
+      .level {
+        display: inline-block;
+        color: @grayLight;
+      }
+    }
+
+    .rarity {
+      width: 8%;
+      text-align: center;
+    }
+
+    .faction {
+      width: 11%;
+    }
+
+    .atk, .hp {
+      width: 6%;
+    }
+
+    td.atk, td.hp {
+      font-size: 140%;
+    }
+
+    td.atk {
+      color: @red;
+    }
+
+    td.hp {
+      color: @green;
+    }
+
+    .hp, .atk, .faction, .spell {
+      text-align: center;
+    }
+
+    .spell {
+      width: 12%;
+    }
+
+    .keywords {
+      margin-top: 2px;
+    }
+
+    .keywords .keyword {
+      display: inline-block;
+      margin-right: 12px;
+
+      img {
+        vertical-align: top;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

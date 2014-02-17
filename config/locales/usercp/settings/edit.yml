@@ -1,0 +1,19 @@
+en:
+  usercp:
+    settings:
+      edit:
+        account_management: Account Management
+        save: Save
+        saving: Saving...
+        receive_emails: Receive Email Updates?
+        receive_emails_desc: Whether you want to receive ForgePost email updates
+        password_desc: Optional, changes your existing password.
+        no_account_yet_1: You have not setup the {ForgePost mod} yet. Until you do, you can't use our store management and other features for buying and selling cards.
+        no_account_yet_2: It only takes a minute to do, see our {F.A.Q} for info.
+        channel_desc: Optional in-game channel people can reach you at.
+        steam_desc: Optional, your steam name that people can reach you at.
+        haggle: Willing to Haggle?
+        haggle_desc: Indicates to viewers whether you're willing to haggle over price.
+        settings_updated: Settings updated!
+        public_desc: Unless public is turned on, nobody will be able to see your store except you.
+        note_desc: Note to show on your store, can be hours you are online or alternative ways of contact. Or you can leave it blank.

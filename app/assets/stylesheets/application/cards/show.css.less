@@ -1,0 +1,142 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+#cards_show, #cards_show_alt, #cards_show_old {
+  #info, #stats, #history {
+    .well {
+      padding: 0;
+
+      ul {
+        list-style: none;
+        margin: 0;
+
+        li {
+          margin: 4px 0 4px 0;
+          padding: 4px 0 4px 0;
+          border-top: 1px solid black;
+
+          &:first-child {
+            border-top: 0;
+          }
+
+          .label, .text {
+            display: inline-block;
+            vertical-align: top;
+          }
+
+          .label {
+            color: @gold;
+            width: 100px;
+            text-align: right;
+            margin-right: 8px;
+          }
+
+          .text {
+            width: 450px;
+          }
+
+          .resources {
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
+
+  #stats {
+    .span4 {
+      width: 325px;
+      margin-right: 45px;
+
+      &:first-child {
+        margin-left: 50px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .well {
+      ul {
+        li {
+          .label {
+            width: 150px;
+          }
+
+          .text {
+            width: 105px;
+            margin-left: 25px;
+          }
+
+          .white {
+            color: @white;
+          }
+        }
+      }
+    }
+  }
+
+  #cards {
+    margin-bottom: 40px;
+
+    .span4 {
+      .full-game-card {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+#cards_show_old {
+  #history {
+    .well {
+      ul {
+        li {
+          .text {
+            width: 1000px;
+            margin-left: 25px;
+
+            .misc, .keywords, .abilities {
+              display: inline-block;
+            }
+
+            .keywords {
+              .keyword {
+                display: inline-block;
+                width: 150px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #history, #info {
+    .diff {
+      font-size: 105%;
+
+      .version {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 4px;
+      }
+
+      .old {
+        margin-bottom: 4px;
+
+        .version {
+          color: lighten(@red, 10%);
+        }
+      }
+
+      .new {
+        .version {
+          color: @green;
+        }
+      }
+    }
+  }
+}

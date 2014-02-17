@@ -1,0 +1,39 @@
+ForgePost.Helpers.Modal = {
+    confirm: function(args) {
+        $(".modal").modal("hide").remove();
+        var modal = $("<div class='modal'><div class='modal-header'><h3 class='text-danger'>"+ I18n.t(args.title) + "</h3></div><div class='modal-body'><p>" + I18n.t(args.body) + "</p></div><div class='modal-footer'><input type='button' class='btn pull-left cancel' value='" + I18n.t("js.cancel") + "' data-dismiss='modal'><input type='button' class='btn btn-danger pull-right confirm' value='" + I18n.t("js." + (args.confirm || "delete")) + "'></div></div>").modal();
+
+        if( args.on_cancel ) {
+            modal.find(".btn.cancel").click(function(event) {
+                args.on_cancel(modal);
+            });
+        }
+
+        modal.find(".btn.confirm").click(function(event) {
+           event.preventDefault();
+           args.on_confirm(modal);
+           if( args.close_on_finish ) modal.modal("hide");
+        });
+
+        return modal;
+    },
+
+    show: function(args) {
+        var body = "<p>" + I18n.t(args.body) + "</p>";
+        if( args.body_2 ) body += "<p>" + I18n.t(args.body_2) + "</p>";
+
+        if( args.linkify ) {
+            var list = body.match(/{(.+?)}/g);
+            for( var i=0, total=list.length; i < total; i++ ) {
+                body = body.replace(list[i], "<a href='" + args.linkify[i] + "' target='_blank'>" + list[i].substring(1, list[i].length - 1) + "</a>");
+            }
+        }
+
+        $(".modal").modal("hide").remove();
+        return $("<div class='modal'><div class='modal-header'><h3 class='text-" + args.color + "'>"+ I18n.t(args.title) + "</h3></div><div class='modal-body'>" + body + "<p>" + I18n.t("js.contact_support", {email: "<a href='mailto:<%= CONFIG[:contact][:email] %>'><%= CONFIG[:contact][:email] %></a>"}) + "</p></div><div class='modal-footer'><input type='button' class='btn pull-left' value='" + I18n.t("js." + (args.close_text || "dismiss")) + "' data-dismiss='modal'></div></div>").modal({keyboard: !args.no_keyboard});
+    },
+
+    hide: function() {
+        $(".modal").modal("hide");
+    }
+}

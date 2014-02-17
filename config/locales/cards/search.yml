@@ -1,0 +1,21 @@
+en:
+  cards:
+    search:
+      search: Search
+      categories_prefix: "Categories:"
+      category_prefix: "Category:"
+      creatures_prefix: "Creatures:"
+      creature_prefix: "Creature:"
+      category: "Type: %{name}"
+      atk_full: Attack
+      searching: Searching...
+      hp: HP
+      reset: Reset
+      filter: Filter
+      filtering: Filtering...
+      keywords_prefix: "Keywords:"
+      keyword_prefix: "Keyword:"
+      level_prefix: "Card Level:"
+      levels_prefix: "Card Levels:"
+      set_prefix: "Set:"
+      sets_prefix: "Sets:"

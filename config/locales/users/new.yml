@@ -1,0 +1,13 @@
+en:
+  users:
+    new:
+      register: Register
+      create: Create
+      creating: Creating
+      email_no_spam: Your email to login with, we won't spam you don't worry!
+      password_desc: Login password.
+      password_confirm_desc: Re-enter your login password.
+      register_features_1: Registering on ForgePost gives you access to our {card collection syncing} as well as full trading controls.
+      register_features_2: With the ForgePost mod, managing what cards you want, what you have for sale, pricing and even managing a store are all easy.
+      register_features_3: Already created an account in-game through the mod? No need to register again, just go to the {login page}.
+

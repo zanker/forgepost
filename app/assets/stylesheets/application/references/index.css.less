@@ -1,0 +1,106 @@
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+
+#references_all {
+  .span2 {
+    .well {
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 0;
+
+        a {
+          padding: 3px 8px 3px 8px;
+          margin: 0;
+        }
+
+        &.category div {
+          padding: 1px 8px 1px 8px;
+        }
+
+        &.sub {
+          a {
+            padding-left: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .span10 {
+    blockquote {
+      line-height: 150%;
+      border-left: 8px solid lighten(@wellBackground, 14%);
+
+      div {
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+    }
+
+    .well {
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      p {
+        img {
+          margin-right: 4px;
+        }
+
+        font-size: 110%;
+      }
+    }
+
+    table {
+      th {
+        color: @gold;
+      }
+
+      .keyword {
+        width: 20%;
+        vertical-align: middle;
+
+        img, div {
+          margin-right: 4px;
+        }
+
+        a, span {
+          vertical-align: middle;
+        }
+      }
+
+      .card {
+        width: 20%;
+        vertical-align: middle;
+      }
+
+      .count {
+        width: 10%;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .desc {
+        width: 60%;
+        vertical-align: middle;
+      }
+
+      td.rarity, th.rarity {
+        width: 20%;
+      }
+
+      .view {
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+- @criteria.each do |version|
+  .row
+    .span12
+      %h3.header
+        = link_to(t("long_version", :version => version.version), patches_show_path(version.version.parameterize), :class => :gold)
+        .pull-right= relative_time(version.created_at, :ago)
+
+  .row
+    .span12
+      .well.well-small
+        .card-changes
+          != aggregate_cards("new", version, Card.where(:added_game_version_id => version._id))
+
+        .card-changes
+          != aggregate_cards("changed", version, Card.where(:added_game_version_id.ne => version._id))
+
+= build_pagination(@criteria.count, CONFIG[:limits][:news])

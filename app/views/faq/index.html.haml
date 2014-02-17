@@ -1,0 +1,16 @@
+.row
+  .span12
+    %h3.header= t(".faq")
+
+.row
+  .span12
+    .well.well-small.well-trimmed
+      - (1..9).each do |i|
+        %h4{:id => "faq-#{i}", "data-id" => i}
+          %span.toggle [+]
+          = t(".faqs.#{i}.title")
+        .faq{:class => "faq-#{i}"}
+          - 10.times do |j|
+            - msg = t(".faqs.#{i}.msg_#{j}", :default => "")
+            - break if msg.blank?
+            %p= msg

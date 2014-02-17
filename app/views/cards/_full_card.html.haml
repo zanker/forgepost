@@ -1,0 +1,28 @@
+.full-game-card.notfixed
+  .name= card.name
+  .type
+    = t("categories.#{card.category}")
+    - if card.creature_type?
+      \-
+      = card.creature_type
+
+  - if card.static_abilities? or card.static_keywords? or card.static_text?
+    .text
+      - if card.static_text?
+        .miscs!= card.static_text.map {|t| parse_text(card, t)}.join
+      - if card.static_abilities?
+        .abilities!= card.static_abilities.map {|t| parse_ability(card, t)}.join
+      - if card.static_keywords?
+        .keywords!= card.static_keywords.map {|t| parse_keyword(card, t)}.join
+
+  - if card.has_stats?
+    .hp= card.hp
+    .atk= card.attack
+
+  = image_tag("cards/large/#{defined?(alt) && alt ? card.alt_image_ids.first : card.image_id}.jpg", :class => "art base")
+  - if card.rarity?
+    = image_tag("rarities/small/icon-#{Card::RARITY_IMAGE_MAPS[card.rarity]}.png", :class => "rarity base")
+  = image_tag(card.border_path(:medium), :class => "border base")
+
+  :javascript
+    (function() { var card = $(".full-game-card.notfixed"); card.removeClass("notfixed"); var name = card.find(".name"); var max_width = 175; name.css({"font-size": Math.min(140, Math.round((max_width / name.width()) * 140)) + "%"}) })();

@@ -1,0 +1,36 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+#news_index, #news_show {
+  #logo {
+    text-align: center;
+  }
+
+  .span12 {
+    float: none;
+
+    .header {
+      margin-top: 6px;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid @grayLight;
+
+      h4 {
+        float: left;
+        margin: 0;
+
+        a {
+          color: @gold;
+          &:hover {
+            color: darken(@gold, 5%);
+          }
+        }
+      }
+
+      .posted {
+        float: right;
+      }
+    }
+  }
+
+}

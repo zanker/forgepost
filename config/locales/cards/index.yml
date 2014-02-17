@@ -1,0 +1,15 @@
+en:
+  cards:
+    index:
+      name: Name
+      resource: Cost
+      rarity: Rarity
+      type: Type
+      atk: Atk
+      hp: HP
+      atk_full: Attack
+      attack: Atk
+      hp: HP
+      last_updated: Updated
+      faction: Faction
+      ability: Ability

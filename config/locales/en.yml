@@ -1,0 +1,208 @@
+en:
+  level: "(lvl %{level})"
+  long_version: "Version %{version}"
+  card_placeholder: Enter card name...
+  versions_prefix: "Versions:"
+  version_prefix: "Version:"
+  version: "%{version}"
+  contact_support_anytime: Feel free to {contact us} if you have any questions.
+  "yes": "Yes"
+  "no": "No"
+  first: First
+  previous: Previous
+  next: Next
+  last: Last
+  ago: ago
+  old: old
+  page: " (page %{page})"
+  gold_long: gold
+  gold_suffix: g
+  silver_suffix: s
+  all: All
+  any: Any
+  rarity: Rarity
+  faction: Faction
+  sort: Sort
+  type: Type
+  period: Period
+  and: and
+  version: "v%{version}"
+  live: Live
+  set: Set
+  level_long: "Level %{level}"
+
+  categories:
+    spell: Spell
+    creature: Creature
+    "0": Creature
+    "1": Spell
+
+  card_sets:
+    set1: One
+    set1_extra: One (Extra)
+
+  factions:
+    alloyin: Alloyin
+    nekrium: Nekrium
+    tempys: Tempys
+    uterra: Uterra
+    "0": Uterra
+    "1": Nekrium
+    "2": Alloyin
+    "3": Tempys
+
+  rarities:
+    token: Token
+    common: Common
+    uncommon: Uncommon
+    rare: Rare
+    heroic: Heroic
+    legendary: Legendary
+    "0": Common
+    "1": Uncommon
+    "2": Rare
+    "3": Heroic
+    "4": Legendary
+
+  short_rarities:
+    common: Com
+    uncommon: Uncom
+    rare: Rare
+    heroic: Hero
+    legendary: Legen
+
+  errors:
+    invalid: "%{name} is invalid"
+
+  seconds:
+    one: 1 second
+    other: "%{count} seconds"
+
+  minutes:
+    one: 1 minute
+    other: "%{count} minutes"
+
+  seconds_short:
+    one: 1 sec
+    other: "%{count} secs"
+
+  minutes_short:
+    one: 1 min
+    other: "%{count} mins"
+
+  hours:
+    one: 1 hour
+    other: "%{count} hours"
+
+  hours_short:
+    one: 1 hr
+    other: "%{count} hrs"
+
+  days:
+    one: 1 day
+    other: "%{count} days"
+
+  providers:
+    google: Google
+    facebook: Facebook
+
+  page_errors:
+    must_login: You need to login before you can access that page.
+    logged_in: You are already logged in!
+
+  descriptions:
+    home: ForgePost gives you accurate card prices based off of real time in-game trade prices and an easily searchable card database.
+    faq: Frequently asked questions about ForgePost, how it works or how to access different features.
+    deckbuilder: Easily build and show off your Solforge decks to other players and get opinions on them.
+    page: from page %{page}
+    card_show: View all of the levels of %{name}, a %{faction} card in Solforge.
+    card_show_alt: Viewing alternative version of %{name}, a %{faction} Solforge card.
+    card_show_version: Changes to %{name} from Cards v%{version}, a %{faction} card in Solforge.
+    card_search: Card database for %{factions} cards on Solforge.
+    card_search_set: Card database for %{factions} Set %{set} cards on Solforge.
+    tooltips: Embed our javascript library and get automate Solforge tooltips on your website.
+    card_specials: Check out the latest card of the day and week on the Solforge store!
+
+  titles:
+    privacy_policy: Privacy Policy
+    deckbuilder: Solforge Deckbuilder
+    login: Login
+    tooltips: Solforge Tooltips
+    card_search: Solforge Card Database
+    card_show: "%{faction} Card"
+    card_show_alt: "%{faction} Alt Card"
+    card_show_version: "%{faction} v%{version} Card"
+    chat: Trade Chat
+    faq: Frequently Asked Questions
+    news: News
+    references_rarities: Solforge Card Rarities Reference
+    references_keywords: Solforge Keywords Reference
+    references_faction: Solforge %{faction} Info
+    references_mechanics: Solforge Mechanics
+    user_cards: My Collection
+    news_page: News (page %{page})
+    register: Register
+    "404": Page Not Found (404)
+    "500": Server Error (500)
+    account_management: Account Management
+    game_patches: Solforge Patch Notes
+    game_patch: Solforge v%{version} Patch Notes
+    card_specials: Card of the Day/Week
+
+  js:
+    dismiss: Dismiss
+    close: Close
+    ok: Ok
+    form_errors: Errors
+    delete_confirm: Are you sure you want to delete this?
+    contact_support: If you continue to have issues, you can contact us at {{email}}.
+    delete: Delete
+    cancel: Cancel
+    loading: Loading...
+    pending_changes: Are you sure you want to leave? Your changes are being saved still.
+    round: Round
+    factions: Factions
+    damage_done: Damage Done
+    round: Round
+    none: None
+    atk: Atk
+    hp: HP
+    show_search: Show Search
+    hide_search: Hide Search
+    total: Total
+    deck_url: "Deck URL: {{url}}"
+
+    categories:
+      "0": Creature
+      "1": Spell
+
+    categories_plural:
+      "0": Creatures
+      "1": Spells
+
+    rarities:
+      "0": Common
+      "1": Uncommon
+      "2": Rare
+      "3": Heroic
+      "4": Legendary
+
+    factions:
+      "0": Uterra
+      "1": Nekrium
+      "2": Alloyin
+      "3": Tempys
+
+    request_error:
+      "500":
+        title: Critical Error
+        desc_1: Sorry, we had a critical error while loading your request.
+        desc_2: We've been notified about this and will get it fixed soon. Contact us at {{email}} if you have any further questions.
+      load:
+        title: Load Error
+        desc_1: Sorry, while loading your data we ran into a critical error.
+        desc_2: Please contact {{email}} and will quickly get it sorted out.
+
+  mongo_mapper:
+    attributes:
+      {}

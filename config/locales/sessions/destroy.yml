@@ -1,0 +1,4 @@
+en:
+  sessions:
+    destroy:
+      success: You have been logged out.

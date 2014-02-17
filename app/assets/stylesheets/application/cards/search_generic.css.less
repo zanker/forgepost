@@ -1,0 +1,135 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+#search {
+  .well {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .span12 {
+      margin: 0;
+      width: 100%;
+      margin-top: 12px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    form {
+      margin-bottom: 0;
+    }
+  }
+
+  #factions, #rarities {
+    .btn {
+      .box-shadow(none);
+      .buttonBackground(lighten(@btnInverseBackground, 5%), lighten(@btnInverseBackgroundHighlight, 2%), @grayDark, 1px 1px 4px rgba(0, 0, 0, .65));
+      border: 1px solid darken(@tableBorder, 6%);
+
+      &.active {
+        .buttonBackground(darken(@btnInverseBackgroundHighlight, 3%), @btnInverseBackgroundHighlight, @grayDark, 1px 1px 4px rgba(0, 0, 0, .65));
+        border: 1px solid darken(@tableBorder, 6%);
+      }
+    }
+  }
+
+  #rarities {
+    .btn {
+      .rarities {
+        filter: gray;
+        -webkit-filter: grayscale(50%);
+      }
+
+      &.active {
+        .rarities {
+          filter: none;
+          -webkit-filter: none;
+        }
+      }
+    }
+  }
+
+  #factions, #rarities, #creatures, #set, #categories, #keywords, #levels {
+    display: inline-block;
+    margin: 0;
+  }
+
+  #factions, #rarities {
+    width: 325px;
+  }
+
+  #creatures, #set, #categories, #keywords, #levels {
+    width: 200px;
+    line-height: 30px;
+
+    .caret {
+      position: relative;
+      top: 4px;
+    }
+  }
+
+  #rarities, #creatures, #set, #categories, #keywords, #levels {
+    font-size: 110%;
+
+    &.btn-group > .btn + .btn {
+      margin-left: -5px;
+    }
+
+    &.dropdown {
+      .dropdown-toggle {
+        color: @gold;
+        text-decoration: none !important;
+
+        span > span {
+          color: @textColor;
+        }
+
+        &:hover {
+          color: lighten(@gold, 15%);
+
+          span > span {
+            color: @white;
+          }
+        }
+      }
+    }
+  }
+
+  #rarities, #factions {
+    .btn {
+      padding: 8px 10px 8px 10px;
+    }
+  }
+
+  #hp, #atk {
+    display: inline-block;
+    width: 225px;
+    margin-top: 6px;
+
+    label {
+      display: inline-block;
+      font-size: 110%;
+      margin: 0 6px 0 0;
+      vertical-align: middle;
+      color: @gold;
+
+      &.div {
+        font-size: 140%;
+        margin: 0 6px 0 6px;
+        color: @white;
+      }
+    }
+
+    input[type='text'] {
+      width: 20px;
+      margin: 0;
+      padding: 2px 4px 2px 4px;
+      text-align: center;
+    }
+  }
+
+  input[type='submit'] {
+    float: right;
+  }
+}

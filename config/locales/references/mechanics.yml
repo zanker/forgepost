@@ -1,0 +1,14 @@
+en:
+  references:
+    mechanics:
+      mechanics: Mechanics
+      deck_cards:
+        title: Decks
+        desc_0: A legal Solforge deck contains 30 cards, no more than 2 unique factions and at most 3 of one type of card.
+        desc_1: In Solforge, cards level as you play them. When you play a card, it levels up and the old version is removed from the deck. A deck will never have more than 30 cards in it.
+        desc_2: Every level, you will draw 20 of 30 cards. At level up, the deck will reshuffle. Decks will also automatically shuffle when they run out of cards due to emptying the deck. This happens when using cards such as {draw1}.
+
+      sickness:
+        title: Summoning Sickness
+        desc_0: When a card is played in Solforge, it gets summoning sickness. Cards cannot attack during the summoning sickness, but will strike back if an enemy card in an opposing lane hits them.
+        desc_1: Summoning sickness ends one round after it was played. It can also be ended early through cards that have or grant {aggressive}, such as {agg1} or {agg2}.

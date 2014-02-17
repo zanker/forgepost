@@ -1,0 +1,24 @@
+en:
+  layouts:
+    application:
+      settings: Settings
+      account: Account
+      logout: Logout
+      contact: Contact
+      noscript: Please enable Javascript to properly use the control panel. If you have any questions, you can contact us at %{email}.
+      login: Login
+      register: Register
+      twitter: Twitter
+      contact_us: Contact Us
+      terms: Terms
+      privacy_policy: Privacy Policy
+      forgepost: ForgePost
+      news: News
+      faq: F.A.Q
+      cards: Card DB
+      deckbuilder: Deck Builder
+      tooltips: Tooltips
+      solforge_reference: Solforge Reference
+      login_with: Login With
+      game_patches: Solforge Patches
+      card_specials: Card of the Day/Week

@@ -1,0 +1,35 @@
+---
+base: &base
+  domain: localhost:3000
+  full_domain: http://localhost:3000
+  mixpanel: 1234
+  bcrypt_cost: 12
+
+  contact:
+    email: 1234
+
+  limits:
+    cards: 250
+    keywords: 10
+    news: 4
+
+  oauth:
+    facebook:
+      key: '1234'
+      secret: '1234'
+
+    google:
+      key: '1234'
+      secret: '1234'
+
+
+development: &development
+  <<: *base
+
+test: &test
+  <<: *base
+
+production: &production
+  <<: *base
+  domain: www.forgepost.com
+  full_domain: http://www.forgepost.com

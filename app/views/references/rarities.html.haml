@@ -1,0 +1,46 @@
+= render_block("base") do
+  .row
+    .span10
+      %h3.header= t(".rarities")
+
+      .well.well-small.well-trimmed
+        %p= t(".rarities_desc_1")
+        %p.last= t(".rarities_desc_2")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.keyword= t(".rarity")
+            %th.count= t(".cards")
+            %th.card= t(".example")
+            %th.desc= t(".desc")
+
+        %tbody
+          - Card::RARITY_MAP.keys.reverse_each do |rarity_id|
+            - next if Card::UNUSED_RARITIES[rarity_id]
+            - card = Card.where(:rarity => rarity_id).only(:level, :faction, :set_card_ids, :external_id, :name, :updated_at, :rarity).first
+
+            %tr
+              %td.keyword
+                = image_tag("rarities/small/icon-#{Card::RARITY_IMAGE_MAPS[rarity_id]}.png", :width => 35, :height => 33)
+                %span{:class => "rarity-#{rarity_id}"}= link_to(t("rarities.#{rarity_id}"), cards_index_search_path(:rarities => Card::RARITY_MAP[rarity_id]))
+
+              %td.count= Card.where(:rarity => rarity_id).count
+
+              %td.card.card.card-tt{"data-tooltip" => path_to_asset(cards_tooltip_path(card.set_card_ids[0], Digest::MD5.hexdigest("#{@card_data_cache}#{card.updated_at}")[0, 16]))}
+                = link_to(card.name, cards_path(card.external_id, card.name.parameterize), :class => "faction-#{card.faction}")
+
+              %td.desc= t(".rarity_info.#{rarity_id}")
+
+          - card = Card.where(:token => true).only(:level, :faction, :set_card_ids, :external_id, :name, :updated_at, :rarity).first
+          %tr
+            %td.keyword
+              = image_tag("rarities/small/icon-0.png", :width => 35, :height => 33)
+              %span{:class => "rarity-token"}= t("rarities.token")
+
+            %td.count= Card.where(:token => true).count
+
+            %td.card.card.card-tt{"data-tooltip" => path_to_asset(cards_tooltip_path(card.set_card_ids[0], Digest::MD5.hexdigest("#{@card_data_cache}#{card.updated_at}")[0, 16]))}
+              = link_to(card.name, cards_path(card.external_id, card.name.parameterize), :class => "faction-#{card.faction}")
+
+            %td.desc= t(".rarity_info.token")

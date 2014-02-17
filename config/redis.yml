@@ -1,0 +1,3 @@
+development: redis://127.0.0.1/10
+test: redis://127.0.0.1/11
+production: redis://:1234@127.0.0.1/4

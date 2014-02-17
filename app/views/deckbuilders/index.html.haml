@@ -1,0 +1,244 @@
+- content_for(:head) do
+  = javascript_include_tag(deckbuilder_cards_path(:format => :js, :cachebust => Digest::MD5.hexdigest("#{Rails.cache.read("card-data-cache")}")[0, 10]), :async => true, :onload => "if( typeof(ForgePost) == 'object' ) { ForgePost.PAGES['deckbuilders/index/ready'](window.card_data); }".html_safe)
+
+.row#manage
+  .span12
+    .well.well-small.well-trimmed
+      #levels.dropdown.option
+        %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+          %span
+            #{t("cards.search.level_prefix")}
+            %span 3
+          %strong.caret
+        %ul.dropdown-menu
+          - Card::LEVELS.each do |level|
+            %li{:class => level == 3 ? :active : nil}
+              %a{:href => "#", "data-key" => level, "data-prefix" => t("cards.search.level_prefix")}= level
+
+      -##sort-by.dropdown.option
+      -#  %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+      -#    %span
+      -#      #{t(".sort_by")}
+      -#      %span= t(".rarity_faction_name")
+      -#    %strong.caret
+      -#  %ul.dropdown-menu
+      -#    - [:rarity_faction_name, :faction_rarity, :name, :attack, :health].each do |key|
+      -#      %li{:class => key == :rarity_faction_name ? :active : nil}
+      -#        %a{:href => "#", "data-key" => key, "data-prefix" => t(".sort_by")}= t(".#{key}")
+
+      .pull-right
+        %a#load-deck.btn.btn-small.btn-success{:href => "#", "data-target" => deckbuilder_deck_list_path}= t(".deck_list")
+        %a#save-deck.btn.btn-small.btn-warning{:href => "#", "data-target" => deckbuilder_storage_path}= t(".save_deck")
+        %a#export-cards.btn.btn-small.btn-success{:href => "#"}= t(".export_card_list")
+        %a#import-cards.btn.btn-small.btn-info{:href => "#"}= t(".import_card_list")
+        %a#toggle-search.btn.btn-small{:href => "#"}= t("js.hide_search")
+        %a#usage.btn.btn-small.btn-primary{:href => "#"}= t(".help")
+
+      .clearfix
+
+.row#preview-search
+  .span3#preview
+
+  .span9#search-container
+    #search
+      .well.well-small.well-trimmed
+        .group
+          #factions.btn-group
+            - Card::FACTION_MAP.each do |faction, id|
+              %a.btn.btn-inverse.active{"data-key" => id, "data-abbrev" => faction[0, 1]}
+                %span{:class => "faction-#{id}"}= t("factions.#{id}")
+
+          #rarities.btn-group
+            - Card::RARITY_MAP.each do |id, rarity|
+              - next if Card::UNUSED_RARITIES[id]
+              %a.btn.btn-inverse.active{"data-key" => id}
+                %div{:class => "rarities rarity-#{Card::RARITY_IMAGE_MAPS[id]} size-20"}
+
+          #name
+            %input{:type => :text, :placeholder => t("card_placeholder")}
+
+        .clearfix
+
+        .group
+          #categories.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t("cards.search.categories_prefix")}
+                %span #{t("all")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li.active
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t("cards.search.categories_prefix")}= t("all")
+
+              - @categories.each do |id, text|
+                %li
+                  %a{:href => "#", "data-key" => id, "data-prefix" => t("cards.search.category_prefix")}= text
+
+          #keywords.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t("cards.search.keywords_prefix")}
+                %span #{t("any")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li.active
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t("cards.search.keywords_prefix")}= t("any")
+
+              - @keywords.each do |slug, text|
+                %li
+                  %a{:href => "#", "data-key" => text, "data-prefix" => t("cards.search.keyword_prefix")}= text
+
+
+          #creatures.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}>
+              %span
+                #{t("cards.search.creatures_prefix")}
+                %span #{t("any")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li.active
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t("cards.search.creatures_prefix")}= t("any")
+
+              - @creatures.each do |slug, text|
+                %li
+                  %a{:href => "#", "data-key" => text, "data-prefix" => t("cards.search.creature_prefix")}= text
+
+          %input.btn.btn-danger.pull-right.btn-small.reset{:type => :button, :value => t("cards.search.reset")}
+
+        .clearfix
+
+    .clearfix
+
+    #cards
+      .well.well-small.well-trimmed
+        #no-cards.text-error= t(".refine_filter")
+        %ul
+
+.row#expanded
+  .span2#summary
+    .well.well-small.well-trimmed
+      %dl.dl-horizontal
+        %dt= t(".total_cards")
+        %dd.total-cards 0
+
+        %dd.pad
+        - Card::CATEGORY_MAP.each do |key, id|
+          %dt= t("categories.#{key}").pluralize
+          %dd.category{"data-category" => id} 0
+
+        %dd.pad
+        - Card::FACTION_MAP.each do |key, id|
+          %dt.faction{"data-faction" => id}
+            %span{:class => "faction-#{id}"}= t("factions.#{key}")
+          %dd.faction{"data-faction" => id} 0
+
+        %dd.pad
+        - Card::RARITY_MAP.keys.reverse.each do |id|
+          - next if Card::UNUSED_RARITIES[id]
+          - key = Card::RARITY_MAP[id]
+          %dt
+            %span{:class => "rarity-#{id}"}= t("rarities.#{key}").pluralize
+          %dd.rarity{"data-rarity" => id} 0
+
+
+  .span10#deck
+    .well.well-small.well-trimmed
+      #deck-empty.text-error= t(".no_deck_cards")
+
+#deck-export.modal.hidden
+  .modal-header
+    %h3= t(".deck_export")
+
+  .modal-body
+    %ul.nav.nav-tabs
+      %li.active= link_to(t(".plaintext"), "#plaintext")
+      %li= link_to(t(".bbcode"), "#bbcode")
+      %li= link_to(t(".html"), "#html")
+      %li= link_to(t(".markdown_reddit"), "#markdown")
+
+    .tab-content
+      .tab-pane.active#plaintext
+        %textarea
+
+      .tab-pane#bbcode
+        %textarea
+
+      .tab-pane#html
+        %textarea
+
+      .tab-pane#markdown
+        %textarea
+
+  .modal-footer
+    %input.btn.pull-left{:type => :button, :value => t("js.dismiss"), "data-dismiss" => "modal"}
+
+#deck-import.modal.hidden
+  .modal-header
+    %h3= t(".deck_import")
+
+  .modal-body
+    %p.gold= t(".enter_card_list")
+    %textarea{:placeholder => t(".card_list")}
+
+  .modal-footer
+    %input.btn.pull-left{:type => :button, :value => t("js.dismiss"), "data-dismiss" => "modal"}
+    %input.btn.btn-success.pull-right{:type => :button, :value => t(".import")}
+
+#deck-storage.modal.hidden
+  .modal-header
+    %h3= t(".deck_storage")
+
+  .modal-body
+    .loading
+      = image_tag("loading.gif")
+      = t(".loading")
+
+    .content
+
+  .modal-footer
+    %input.btn.pull-left{:type => :button, :value => t("js.dismiss"), "data-dismiss" => "modal"}
+
+#deck-list.modal.hidden
+  .modal-header
+    %h3= t(".deck_list")
+
+  .modal-body
+    .loading
+      = image_tag("loading.gif")
+      = t(".loading")
+
+    .content
+
+  .modal-footer
+    %input.btn.pull-left{:type => :button, :value => t("js.dismiss"), "data-dismiss" => "modal"}
+
+#help.modal.hidden
+  .modal-header
+    %h3= t(".help")
+
+  .modal-body
+    %p.gold= t(".controls_click")
+    %span.gold= t(".keybindings")
+    %ul.unstyled
+      - [1, 2, 3, "u", "t", "n", "a"].each do |key|
+        %li
+          %span.gold= key
+          \-
+          = t(".bindings.#{key}")
+
+
+  .modal-footer
+    %input.btn.pull-left{:type => :button, :value => t("js.dismiss"), "data-dismiss" => "modal"}
+
+
+#loading.modal.hidden
+  = image_tag("loading.gif")
+  = t(".loading")
+
+:javascript
+  if( window.location.hash != "" ) {
+    $("#preview-search").hide();
+    $("#toggle-search").text(I18n.t("js.show_search"));
+  }
+
+  var card_inventory = #{@card_list.empty? ? "null" : @card_list.to_json};

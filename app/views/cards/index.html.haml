@@ -1,0 +1,64 @@
+- cache("#{request.path}/#{DEPLOY_ID}/#{@card_data_cache}/#{params[:page]}/#{Post.last_post}/#{cookies.signed[:nt]}", :expires_in => 24.hours) do
+  = render :partial => "search"
+  :javascript
+    $("#cards_index").find(".dropdown").each(function(){ var active = $(this).find("ul.dropdown-menu li.active a"); $(this).find("a.dropdown-toggle span").html(active.data("prefix") + " <span>" + active.text() + "</span>"); });
+
+  .row
+    .span12
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.icon
+              &nbsp;
+            %th.name!= sort_header(t(".name"), "name")
+            %th.rarity!= sort_header(t(".rarity"), "rarity")
+            %th.faction!= sort_header(t(".faction"), "faction")
+            %th.atk!= sort_header(t(".attack"), "attack")
+            %th.hp!= sort_header(t(".hp"), "hp")
+            %th.text!= sort_header(t(".ability"), "abilities")
+
+        %tbody
+          - @cards.each do |card|
+            %tr
+              %td.icon
+                = image_tag("cards/tiny/#{card.image_id}.jpg", :class => "cards size-tiny")
+              %td.name.card-tt{"data-name" => card.name, "data-tooltip" => path_to_asset(cards_tooltip_path(card.set_card_ids[0], Digest::MD5.hexdigest("#{@card_data_cache}#{card.updated_at}")[0, 16]))}
+                = link_to(card.name, cards_path(card.external_id, card.name.parameterize), :class => :alt)
+                - unless @filters[:level]
+                  .level= t("level", :level => card.level)
+
+              %td.rarity
+                - if !card.token?
+                  %div{:class => "rarities rarity-#{Card::RARITY_IMAGE_MAPS[card.rarity]} size-20"}
+                - else
+                  %div{:class => "rarities rarity-token rarity-0 size-20"}
+
+              %td.faction
+                %span{:class => "faction-#{card.faction}"}= t("factions.#{card.faction}")
+
+              - if card.has_stats?
+                %td.atk= number_with_delimiter(card.attack >= 0 ? card.attack : 0)
+                %td.hp= number_with_delimiter(card.hp >= 0 ? card.hp : 0)
+              - else
+                %td.spell{:colspan => 2}= t("categories.spell")
+
+              %td.text
+                - if card.static_text?
+                  .miscs!= card.static_text.map {|t| parse_text(card, t)}.join(" / ")
+
+                - if card.static_abilities?
+                  .abilities!= card.static_abilities.map {|t| parse_ability(card, t)}.join
+
+                - if card.static_keywords?
+                  .keywords!= card.static_keywords.map {|t| parse_keyword(card, t)}.join
+
+                - unless card.static_text? or card.static_abilities? or card.static_keywords?
+                  \--
+
+
+          - if @cards.empty?
+            %tr
+              %td{:colspan => 9}
+                %span.text-error= t(".no_cards_found")
+
+  = build_pagination(@cards.count, CONFIG[:limits][:cards])

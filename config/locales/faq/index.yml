@@ -1,0 +1,11 @@
+en:
+  faq:
+    index:
+      faq: Frequently Asked Questions
+      faqs:
+        "1":
+          title: How do I get pricing data inside or collection syncing inside Cards?
+          msg_0: Our ForgePost mod for {Summoner} adds pricing data inside of the trade window, as well as a quick /pc <name> to check prices.
+          msg_1: In addition, to speed up finding people to sell cards to, or find cards to buy, we now offer collection syncing inside of the ForgePost mod.
+          msg_2: If you already have the mod, just type /forgepost in-game and click "ForgePost Authentication", setup or login to an account and you will automatically get collection syncing.
+          msg_3: If you don't have the mod yet, you will need to install {Summoner}, then go to the "Mods" option in-game, click "Add Repository" and enter "http://mods.forgepost.com", click the ForgePost repository and install "Official-ForgePost".

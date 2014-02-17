@@ -1,0 +1,450 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+h3.header {
+  color: #F2C327;
+  font-weight: normal;
+}
+
+.full-game-card {
+  .hp, .atk {
+    bottom: 24px !important;
+  }
+}
+
+#preloader {
+  .a {
+    font-family: "Optimus Princeips";
+  }
+
+  .b {
+    font-family: "Optimus Princeips Semi Bold";
+  }
+}
+
+.currency {
+  color: @white;
+  display: inline-block;
+}
+
+.keyword, .abilities, .miscs {
+  a {
+    color: @altLinkColor;
+
+    &:hover {
+      color: @altLinkColorHover;
+    }
+  }
+
+  .attack {
+    color: darken(@red, 10%);
+  }
+
+  .health {
+    color: darken(@green, 10%);
+  }
+}
+
+.wrapper > .navbar {
+  margin-bottom: 10px;
+}
+
+.gabagt {
+  margin: auto;
+  width: 970px;
+  height: 90px;
+  background: image-url("reminder.png") no-repeat;
+  margin-bottom: 20px;
+
+  ins {
+    margin: auto;
+  }
+}
+
+table {
+  thead {
+    th {
+      color: @white;
+
+      a {
+        color: @white !important;
+
+        &:hover {
+          color: @gold !important;
+        }
+      }
+    }
+  }
+}
+
+.nav.nav-tabs {
+  border: 0;
+  margin: 0;
+
+  li {
+    margin-right: 8px;
+
+    a {
+      border: 1px solid @tableBorder;
+      background-color: darken(@tableBackground, 3%);
+      color: @white;
+      .opacity(80);
+      .border-top-left-radius(@borderRadiusSmall);
+      .border-top-right-radius(@borderRadiusSmall);
+
+      &:hover {
+        .opacity(100);
+        background-color: darken(@tableBackground, 3%);
+        color: @gold;
+      }
+    }
+
+    &.active {
+      a {
+        .opacity(100);
+        background-color: lighten(@tableBackground, 6%);
+        color: @gold;
+      }
+    }
+  }
+}
+
+a.alt {
+  color: @altLinkColor;
+
+  &:hover {
+    color: @altLinkColorHover;
+  }
+}
+
+a.altlight {
+  color: lighten(@altLinkColor, 4%);
+
+  &:hover {
+    color: lighten(@altLinkColorHover, 4%);
+  }
+}
+
+.tab-content {
+  border: 1px solid @tableBorder;
+  background-color: darken(@wellBackground, 3%);
+}
+
+.translation_missing {
+  color: red !important;
+}
+
+.hidden {
+  display: none;
+}
+
+p.emph {
+  font-size: 110%;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.center {
+  text-align: center !important;
+}
+
+.caret-up, .caret-down {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  content: "";
+
+  position: relative;
+  top: -1px;
+  margin-left: 8px;
+}
+
+.caret-up {
+  border-bottom: 5px solid @white;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+.caret-down {
+  border-top: 5px solid @white;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+#fp-card-tooltip {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 900;
+  overflow: hidden;
+}
+
+table {
+  thead {
+    th {
+      a {
+        color: @textColor;
+
+        &:hover {
+          color: darken(@textColor, 10%);
+        }
+      }
+    }
+  }
+}
+
+.gold {
+  color: @gold;
+}
+
+.rarity-token {
+  color: @rarityToken;
+
+  a {
+    color: @rarityToken;
+
+    &:hover {
+      color: darken(@rarityToken, 10%);
+    }
+  }
+}
+
+.rarity-0 {
+  color: @rarityCommon;
+
+  a {
+    color: @rarityCommon;
+
+    &:hover {
+      color: darken(@rarityCommon, 10%);
+    }
+  }
+}
+
+.rarity-1 {
+  color: @rarityUncommon;
+
+  a {
+    color: @rarityUncommon;
+
+    &:hover {
+      color: darken(@rarityUncommon, 10%);
+    }
+  }
+}
+
+.rarity-2 {
+  color: @rarityRare;
+
+  a {
+    color: @rarityRare;
+
+    &:hover {
+      color: darken(@rarityRare, 10%);
+    }
+  }
+}
+
+.rarity-3 {
+  color: @rarityHeroic;
+
+  a {
+    color: @rarityHeroic;
+
+    &:hover {
+      color: darken(@rarityHeroic, 10%);
+    }
+  }
+}
+
+.rarity-4 {
+  color: @rarityLegendary;
+
+  a {
+    color: @rarityLegendary;
+
+    &:hover {
+      color: darken(@rarityLegendary, 10%);
+    }
+  }
+}
+
+.faction-0 {
+  color: @factionUterra;
+}
+
+.faction-1 {
+  color: @factionNekrium;
+}
+
+.faction-2 {
+  color: @factionAlloyin;
+}
+
+.faction-3 {
+  color: @factionTempys;
+}
+
+#error-list {
+  margin-bottom: 24px;
+  display: none;
+}
+
+.well-trimmed {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#social-buttons {
+  .set:first-child {
+    margin-bottom: 13px;
+  }
+
+  .set {
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none !important;
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+}
+
+p.last {
+  margin-bottom: 0;
+}
+
+.select-xlarge {
+  width: 270px;
+  height: 125px !important;
+}
+
+.navbar-inner {
+  .border-radius(0);
+}
+
+.navbar .container {
+  #grid > .core > .span(@gridColumns);
+
+  a:focus {
+    outline: none;
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-image: image-url("bg.png");
+  background-color: @bodyBackground;
+}
+
+.input-full {
+  width: 96%;
+}
+
+.wrapper .navbar .navbar-inner .container .brand {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 28px;
+  padding-right: 8px;
+}
+
+.wrapper {
+  margin-bottom: -40px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
+
+.well {
+//  border: 1px solid @borderColor;
+//  background: @darkBg;
+//  .border-radius(2px);
+//  #gradient > .vertical(@darkBg, lighten(@darkBg, 1%));
+}
+
+.table-bordered {
+  th, td {
+    border-left: 1px solid @black;
+
+    &:first-child {
+      border-left: 1px solid @tableBorder;
+    }
+  }
+
+  td {
+    border-top: 1px solid @black;
+  }
+
+  th {
+    border-bottom: 1px solid @tableBorder;
+  }
+
+  tr:first-child {
+    td {
+      border-top: 0;
+    }
+  }
+}
+
+#datanav {
+  .navbar-inner {
+    border: 1px solid @borderColor;
+    .border-radius(2px);
+    background: @wellBackground;
+    #gradient > .vertical(@wellBackground, darken(@wellBackground, 1%));
+    padding-left: 0px;
+    padding-right: 0px;
+    min-height: inherit;
+
+    a.dropdown-toggle {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .resources {
+      position: relative;
+      top: -1px;
+      margin-right: 2px;
+    }
+  }
+}
+
+
+.push {
+  height: 60px;
+}
+
+footer {
+  height: 40px;
+  margin-bottom: 4px;
+
+  p, a, span {
+    line-height: 36px;
+    vertical-align: bottom;
+  }
+
+  p, ul {
+    margin-bottom: 0;
+  }
+}
+
+footer li {
+  float: left;
+  margin-left: 14px;
+}
+
+// Opera
+body:before {
+  content:"";
+  height:100%;
+  float:left;
+  width:0;
+  margin-top:-32767px;
+}

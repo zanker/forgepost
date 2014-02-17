@@ -1,0 +1,73 @@
+= content_for :header do
+  .well.well-small.well-trimmed
+    %ul
+      %li
+        .label= t(".name")
+        .text= render_card_data(:name, 0)
+
+      %li
+        .label= t(".faction")
+        .text
+          != render_card_data(:faction, 0) do |card|
+            = link_to(t("factions.#{card.faction}"), cards_index_search_path(:factions => card.faction), :class => "faction-#{card.faction}")
+
+      %li
+        .label= t(".rarity")
+        .text
+          != render_card_data(:rarity, 0) do |card|
+            - if !card.token?
+              %div{:class => "rarities rarity-#{Card::RARITY_IMAGE_MAPS[card.rarity]} size-20"}
+              %span{:class => "rarity-#{card.rarity}"}= t("rarities.#{card.rarity}")
+            - else
+              %div{:class => "rarities rarity-token rarity-0 size-20"}
+              %span{:class => "rarity-token"}= t("rarities.token")
+
+      %li
+        .label= t(".added")
+        .text= t("version", version: GameVersion.id_to_version(@live_card.added_game_version_id))
+
+      - if @live_card.last_game_version_id?
+        %li
+          .label= t(".last_updated")
+          .text= t("version", version: GameVersion.id_to_version(@live_card.last_game_version_id))
+
+= render_block("show_base") do
+  - unless @card_stats.empty?
+    .row#stats
+      - @card_levels.each do |card|
+        .span4
+          %h4.text-center= t("level_long", :level => card.level)
+          .well.well-small.well-trimmed
+            %ul
+              - [[:global, t(".all_cards")], [:faction, t("factions.#{card.faction}")], [:creature, card.creature_prim_type]].each do |type, text|
+                - next if type == :creature
+                - next unless @card_stats[card.level][type]
+                %li
+                  .label
+                    - if type == :faction
+                      %span{:class => "faction-#{card.faction}"}= text
+                    - else
+                      %span.white= text.pluralize
+
+                  .text!= t(".avg_total", :count => content_tag(:span, number_with_delimiter(@card_stats[card.level][type][:hp][:total]), :class => :gold))
+                - [:attack, :hp].each do |stat|
+                  %li
+                    .label= t(".avg_#{stat}")
+                    .text
+                      != t(".avg_stat", :avg => number_with_precision(@card_stats[card.level][type][stat][:avg], :precision => 2, :strip_insignificant_zeros => true))
+                      - val = card.send(stat)
+                      - diff = (val / @card_stats[card.level][type][stat][:avg]).round(2) * 100
+
+                      - if val > @card_stats[card.level][type][stat][:avg]
+                        %span.text-success (+#{number_to_percentage(diff - 100, :precision => 0)})
+                      - elsif diff == 100
+                        %span.muted (0%)
+                      - else
+                        %span.text-error (-#{number_to_percentage(100 - diff, :precision => 0)})
+
+  .row#cards
+    - @card_levels.each do |card|
+      .span4
+        = render :partial => "full_card", :locals => {:card => card, :alt => @alt}
+
+    .clearfix

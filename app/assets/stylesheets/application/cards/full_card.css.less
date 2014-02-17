@@ -1,0 +1,140 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+@font-face {
+  font-family: "Optimus Princeips";
+  src: font-url("optimusprinceps.eot");
+  src: font-url('optimusprinceps.eot?#iefix') format('embedded-opentype'),
+       font-url('optimusprinceps.woff') format('woff'),
+       font-url('optimusprinceps.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "Optimus Princeips Semi Bold";
+  src: font-url("optimusprincepssemibold.eot");
+  src: font-url('optimusprincepssemibold.eot?#iefix') format('embedded-opentype'),
+       font-url('optimusprincepssemibold.woff') format('woff'),
+       font-url('optimusprincepssemibold.ttf') format('truetype');
+}
+
+.card-set {
+  .full-game-card {
+    display: inline-block;
+    margin-left: -10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.full-game-card {
+  height: 575px;
+  width: 350px;
+  position: relative;
+
+  .border {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+
+    position: relative;
+    z-index: 2;
+  }
+
+  .name, .type, .text, .hp, .atk {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .name {
+    top: 81px;
+    left: 32px;
+    color: @black;
+    font-family: "Optimus Princeips Semi Bold";
+    font-weight: bold;
+    font-size: 140%;
+    white-space: nowrap;
+  }
+
+  .type {
+    top: 382px;
+    left: 40px;
+    color: @black;
+  }
+
+  .type, .text, .hp, .atk {
+    font-family: "Optimus Princeips";
+  }
+
+  .type, .text {
+    font-weight: bold;
+  }
+
+  .text {
+    top: 410px;
+    left: 40px;
+    width: 260px;
+    color: @black;
+    font-size: 85%;
+
+    a {
+      font-family: "Optimus Princeips Semi Bold";
+      color: #0000FF;
+      font-weight: bold;
+      font-size: @baseFontSize - 1;
+    }
+
+    .health {
+      color: darken(#047A08, 8%);
+    }
+  }
+
+  .hp, .atk {
+    font-size: 240%;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.90);
+  }
+
+  .hp {
+    color: @gold;
+    right: 16px;
+    width: 62px;
+    text-align: center
+  }
+
+  .atk {
+    color: @gold;
+    left: 12px;
+    width: 62px;
+    text-align: center
+  }
+
+  .rarity {
+    width: 32px;
+    height: 30px;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    z-index: 3;
+
+    top: 376px;
+    right: 32px;
+  }
+
+  .art {
+    background-repeat: no-repeat;
+    .scale(0.79);
+    height: 350px;
+    width: 350px;
+
+    position: absolute;
+    z-index: 1;
+
+    top: 70px;
+    left: -4px;
+  }
+
+  img.base {
+    display: block;
+  }
+}

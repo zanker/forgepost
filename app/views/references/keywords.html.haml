@@ -1,0 +1,50 @@
+= render_block("base") do
+  .row
+    .span10
+      %h3.header= t(".solforge_keywords")
+
+      .well.well-small.well-trimmed
+        %p= t(".solforge_desc_1")
+        %p.last= t(".solforge_desc_2")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.keyword= t(".keyword")
+            %th.card= t(".example")
+            %th.desc= t(".desc")
+
+        %tbody
+          - KeywordInfo.where(:active => true, :official => true).sort(:internal.desc).each do |keyword|
+            - card = Card.where(:keywords => keyword.external).only(:level, :faction, :set_card_ids, :external_id, :name, :updated_at).first
+            %tr
+              %td.keyword
+                = image_tag("status/tiny/#{keyword.slug}.png", :height => 19, :width => 20)
+                = link_to(keyword.external, cards_index_search_path(:keywords => keyword.slug), :class => :alt)
+              %td.card.card-tt{"data-tooltip" => path_to_asset(cards_tooltip_path(card.set_card_ids[0], Digest::MD5.hexdigest("#{@card_data_cache}#{card.updated_at}")[0, 16]))}
+                = link_to(card.name, cards_path(card.external_id, card.name.parameterize), :class => "faction-#{card.faction}")
+              %td.desc!= parse_keyword_info(keyword.desc)
+
+  .row
+    .span10
+      %h3.header= t(".forgepost_keywords")
+
+      .well.well-small.well-trimmed
+        %p= t(".forgepost_desc_1")
+        %p.last= t(".forgepost_desc_2")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.keyword= t(".keyword")
+            %th.card= t(".example")
+            %th.desc= t(".desc")
+
+        %tbody
+          - SyncGameData::CUSTOM_KEYWORDS.sort_by {|r| r[:text]}.each do |keyword|
+            - card = Card.where(:keywords => keyword[:text]).only(:level, :faction, :set_card_ids, :external_id, :name, :updated_at).first
+            %tr
+              %td.keyword= link_to(keyword[:text], cards_index_search_path(:keywords => keyword[:text].parameterize), :class => :alt)
+              %td.card.card-tt{"data-tooltip" => path_to_asset(cards_tooltip_path(card.set_card_ids[0], Digest::MD5.hexdigest("#{@card_data_cache}#{card.updated_at}")[0, 16]))}
+                = link_to(card.name, cards_path(card.external_id, card.name.parameterize), :class => "faction-#{card.faction}")
+              %td.desc= keyword[:desc]

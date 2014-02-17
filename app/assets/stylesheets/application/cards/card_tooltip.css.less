@@ -1,0 +1,47 @@
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+
+#fp-card-tooltip {
+  position: absolute;
+  z-index: 900;
+  overflow: hidden;
+  display: none;
+
+  &.scale {
+    .scale(0.74);
+  }
+
+  .loading {
+    position: relative;
+    z-index: 901;
+
+    width: 125px;
+    padding: 8px 12px 8px 12px;
+
+    text-align: center;
+    text-decoration: none;
+    font-size: 120%;
+
+    vertical-align: middle;
+
+    background-color: @tableBackgroundAccent;
+    color: @textColor;
+
+    .border-radius(@baseBorderRadius);
+    border: 1px solid @tableBorder;
+
+    .indicator {
+      vertical-align: middle;
+      height: 32px;
+      width: 32px;
+      background: image-url("loading.gif") no-repeat;
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    span {
+      position: relative;
+      top: 2px;
+    }
+  }
+}

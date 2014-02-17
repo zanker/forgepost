@@ -1,0 +1,15 @@
+.row#references_all
+  .span2
+    .well.well-small.well-trimmed
+      %ul.nav.nav-list
+        %li{:class => active_param_class(:action, :keywords)}= link_to(t(".keywords"), references_keywords_path)
+        %li{:class => active_param_class(:action, :rarities)}= link_to(t(".rarities"), references_rarities_path)
+        %li{:class => active_param_class(:action, :mechanics)}= link_to(t(".mechanics"), references_mechanics_path)
+
+        %li.category
+          %div= t(".factions")
+        - Card::FACTION_MAP.each do |faction, id|
+          %li.sub{:class => active_param_class(:faction, faction)}= link_to(t("factions.#{id}"), references_faction_path(:faction => faction), :class => "faction-#{id}")
+
+  .span10
+    = body

@@ -1,0 +1,9 @@
+.row
+  .span12
+    %h3.header= t(".page_not_found")
+
+    .well.well-small
+      %p
+        %strong.text-error= t(".oops")
+        = t(".page_doesnt_exist")
+      %p.last!= t(".go_back_support", :go_back => link_to(t(".go_back"), url_for(:back)), :email => mail_to(CONFIG[:contact][:email]))

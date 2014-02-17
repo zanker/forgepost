@@ -1,0 +1,28 @@
+@import "application/cards/card_tooltip.css.less";
+
+#fp-card-tooltip {
+  @import "application/cards/full_card.css.less";
+
+
+  .loading {
+    .indicator {
+      .scale(0.60);
+      margin-right: 3px;
+    }
+
+    span {
+      font-size: @fontSizeLarge;
+    }
+  }
+
+  .loading {
+    background-color: lighten(@black, 4%);
+    border-color: darken(@white, 50%);
+    .border-radius(4px);
+    padding: 2px 0 2px 0;
+  }
+
+  .hp, .atk {
+    bottom: 12px;
+  }
+}

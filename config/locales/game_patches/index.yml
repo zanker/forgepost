@@ -1,0 +1,8 @@
+en:
+  game_patches:
+    index:
+      patch_notes: "Patch Notes:"
+      new_cards: New Cards
+      changed_cards: Updated Cards
+      no_new_cards: No cards were added with this patch.
+      no_changed_cards: No cards were modified with this patch.

@@ -1,0 +1,57 @@
+- content_for(:head) do
+  = javascript_include_tag(:tooltips)
+
+.row
+  .span7
+    %h3= t(".setup")
+    .well.well-small.well-trimmed
+      %p= t(".embedded")
+
+      %p
+        %strong.gold= t(".with_embed")
+      %textarea
+        <script src="http://www.forgepost.com/powered/tooltips-v2.js"></script>
+
+      %p
+        %strong.gold= t(".without_embed")
+      %textarea
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="http://www.forgepost.com/powered/tooltips-v2.js"></script>
+
+      .config
+        %p
+          %strong.gold= t(".config")
+
+        %p= t(".add_above")
+        %textarea
+          :plain
+            &nbsp;
+            $ForgePost = {config: {
+                offsetX: 20, # X offset of the tooltip from the link
+                offsetY: -20 # Y offset of the tooltip from the link
+                levels: "3" # What levels to show in the tooltip, use 1,2,3 to show all 3 levels at once
+                scale: 0.74 # Scales the tooltips up or down
+            }}
+
+
+  .span5
+    %h3= t(".examples")
+    .well.well-small.well-trimmed
+      %p= t(".below_examples")
+
+
+      - card = Card.where(:level => 1).first
+      %div
+        = t(".all_levels")
+        \-
+        = link_to(card.name, cards_url(card.external_id, card.name.parameterize), :class => :alt, "data-fp-levels" => "1,2,3")
+
+      %div
+        = t(".level_1_3")
+        \-
+        = link_to(card.name, cards_url(card.external_id, card.name.parameterize), :class => :alt, "data-fp-levels" => "1,3")
+
+      %div
+        = t(".level_3")
+        \-
+        = link_to(card.name, cards_url(card.external_id, card.name.parameterize), :class => :alt, "data-fp-levels" => "3")

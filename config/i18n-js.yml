@@ -1,0 +1,4 @@
+translations:
+  -
+    file: "public/javascripts/usercp.js"
+    only: ["*.usercp.*.*.js.*", "*.js.*"]

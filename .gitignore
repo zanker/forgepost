@@ -1,0 +1,6 @@
+log/
+tmp/
+public/assets/
+public/system/
+spec/cassettes/
+.zeus.sock

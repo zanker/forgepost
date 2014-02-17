@@ -1,0 +1,3 @@
+.card-set{"style" => "width: #{350 * cards.count}px"}
+  - cards.each do |card|
+    = render :partial => "full_card", :locals => {:card => card}

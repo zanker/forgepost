@@ -1,0 +1,32 @@
+- if !user_signed_in?
+  %p.text-error= t(".login_register")
+  %p= linkify_text(t(".login_go"), [:blank, new_session_path])
+  %p.last= t(".once_done")
+- else
+  #new-deck
+    %p
+      %strong.gold= t(".new_deck")
+    %form{:action => deckbuilder_path}
+      %p.text-error.hidden
+      %input.input-medium{:type => :text, :placeholder => t(".deck_placeholder")}
+      %input.btn-success.btn{:type => :submit, :value => t(".save_new"), "data-loading-text" => t(".saving")}
+
+  - unless @decks.empty?
+    #current-deck
+      %p
+        %strong.gold= t(".update_existing")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th= t(".name")
+            %th.faction= t(".factions")
+            %th.overwrite= t(".overwrite")
+
+        %tbody
+          - @decks.each do |deck|
+            %tr
+              %td= deck.name
+              %td.faction!= deck.factions.map {|f| content_tag(:span, t("factions.#{f}"), :class => "faction-#{f}")}.join(", ")
+              %td.overwrite
+                %input.btn.btn-success.btn-mini{:type => :button, :value => t(".overwrite"), "data-target" => deckbuilder_path(:id => deck._id), "data-loading-text" => t(".saving")}

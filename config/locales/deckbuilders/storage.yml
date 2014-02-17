@@ -1,0 +1,14 @@
+en:
+  deckbuilders:
+    storage:
+      login_register: You need to be logged in to save your deck!
+      login_go: Registration only takes a second, {click here} to register or login. Don't worry, it'll open in a new window.
+      once_done: After you're logged in, just close this dialog box and click "Save Deck" again and you will able to save your deck.
+      deck_placeholder: Enter deck name...
+      save_new: Save New Deck
+      saving: Saving...
+      overwrite: Overwrite
+      factions: Factions
+      update_existing: Update Existing Deck
+      new_deck: New Deck
+      name: Name

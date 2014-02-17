@@ -1,0 +1,12 @@
+en:
+  references:
+    keywords:
+      solforge_keywords: Solforge Keywords
+      solforge_desc_1: The below are Solforge keywords used on cards.
+      solforge_desc_2: These are created by Stone Blade and indicate special properties such as Mobility, which lets a card move around the board.
+      forgepost_keywords: ForgePost Keywords
+      forgepost_desc_1: The below are keywords created by ForgePost to aid in searching cards.
+      forgepost_desc_2: They aren't officially used by Stone Blade, but we provide descriptions to make it easier to understand what the search does.
+      keyword: Keyword
+      example: Example
+      desc: Description

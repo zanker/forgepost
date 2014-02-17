@@ -1,0 +1,74 @@
+= render_block("base") do
+  .row
+    .span10
+      %h3.header= t("factions.#{@faction.faction}")
+
+      .well.well-small.well-trimmed
+        %p.last.emph= t(".#{@faction.faction}.desc")
+
+      .well.well-small.well-trimmed
+        %blockquote
+          - 10.times do |i|
+            - msg = t(".#{@faction.faction}.official_#{i}", :default => "")
+            - break if msg.blank?
+            %div= msg
+
+        = linkify_text(t(".solforge_reference"), "http://solforgegame.com/game/lore/#{@faction.faction}-faction/")
+
+    .span3
+      %h3.header= t(".keywords_used")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.keyword= t(".keyword")
+            %th.count= t(".cards")
+
+        %tbody
+          - KeywordInfo.where(:"faction_count.#{@faction.faction_id}".gt => 0).sort(:"faction_count.#{@faction.faction_id}".desc).each do |keyword|
+            %tr
+              %td.keyword
+                - if keyword.official?
+                  = image_tag("status/tiny/#{keyword.slug}.png", :height => 19, :width => 20)
+                = link_to(keyword.external, cards_index_search_path(:keywords => keyword.slug, :level => :all, :factions => @faction.faction), :class => "alt tt", :title => keyword.desc)
+              %td.count= number_with_delimiter(keyword.faction_count[@faction.faction_id.to_s])
+
+    .span3
+      %h3.header= t(".rarity_distrib")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.rarity= t(".rarity")
+            %th.count= t(".cards")
+
+        %tbody
+          %tr
+            %td.rarity= t(".total")
+            %td.count= number_with_delimiter(@faction.count)
+
+          - list = @faction.rarity_count.map {|id, count| [id.to_i, count]}.sort_by {|r| -r[0]}
+          - list.each do |row|
+            %tr
+              %td.rarity
+                .rarities.size-20{:class => "rarity-#{Card::RARITY_IMAGE_MAPS[row[0]]}"}
+                %span{:class => "rarity-#{row[0]}"}= t("rarities.#{row[0]}")
+              %td.count
+                = number_with_delimiter(row[1])
+                = surround "(", ")" do
+                  %span.gold= number_to_percentage((row[1] / @faction.count.to_f) * 100, :precision => 2)
+
+    .span4
+      %h3.header= t(".starter_decks")
+
+      %table.table.table-bordered.table-hover.table-striped
+        %thead
+          %tr
+            %th.name= t(".name")
+            %th.view= t(".view")
+
+        %tbody
+          - Deck.where(:factions => @faction.faction_id, :category => "starterdeck").sort(:name.desc).each do |deck|
+            %tr
+              %td.name= deck.name
+              %td.view= link_to(t(".view"), deckbuilder_path(:anchor => deck.deckbuilder_hash), :class => :alt)

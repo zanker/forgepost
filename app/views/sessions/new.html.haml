@@ -1,0 +1,17 @@
+= content_for :head do
+  = javascript_include_tag(:timezone)
+
+.row
+  .span12
+    %h3.header= t(".login")
+    %p.lead= t(".pick_login_method")
+
+.row#login
+  .span12
+    %a.btn.btn-large.btn-success{:id => "login-google", :href => (!params[:origin].blank? and params[:origin].to_s !~ /\./) ? "/sessions/google?origin=#{params[:origin]}" : "/sessions/google"}
+      %div{:class => "google size-24"}
+      = t(".login_with", :provider => t("providers.google"))
+
+    %a.btn.btn-large.btn-primary{:id => "login-facebook", :href => (!params[:origin].blank? and params[:origin].to_s !~ /\./) ? "/sessions/facebook?origin=#{params[:origin]}" : "/sessions/facebook"}
+      %div{:class => "facebook size-24"}
+      = t(".login_with", :provider => t("providers.facebook"))

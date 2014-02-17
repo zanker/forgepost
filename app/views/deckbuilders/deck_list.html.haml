@@ -1,0 +1,25 @@
+- if !user_signed_in?
+  %p.text-error= t(".login_register")
+  %p= linkify_text(t(".login_go"), [:blank, new_session_path])
+  %p.last= t(".once_done")
+
+- else
+  - if @decks.empty?
+    %p.text-error= t(".save_deck_first")
+
+  - else
+    %table.table.table-bordered.table-hover.table-striped
+      %thead
+        %tr
+          %th= t(".name")
+          %th.faction= t(".factions")
+          %th.delete= t(".delete")
+          %th.load= t(".load")
+
+      %tbody
+        - @decks.each do |deck|
+          %tr
+            %td= deck.name
+            %td.faction!= deck.factions.map {|f| content_tag(:span, t("factions.#{f}"), :class => "faction-#{f}")}.join(", ")
+            %td.delete= link_to(t(".delete"), "#", "data-target" => deckbuilder_path(:id => deck._id), :class => "btn btn-mini btn-danger", "data-loading-text" => t(".deleting"))
+            %td.load= link_to(t(".load"), deckbuilder_path(:anchor => deck.deckbuilder_hash), :class => "btn btn-mini btn-success")

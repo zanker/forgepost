@@ -1,0 +1,79 @@
+.row
+  .span12
+    %h3.header= t(".account_management")
+
+- unless @account
+  .row
+    .span12
+      .alert.alert-error
+        .close x
+        %strong
+          %p= linkify_text(t(".no_account_yet_1"), faq_index_path(:anchor => "1"))
+          %p= linkify_text(t(".no_account_yet_2"), faq_index_path(:anchor => "1"))
+
+.row
+  .span12
+    .well.well-small
+      #error-list
+      = form_for current_user, :url => {:action => :update}, :html => {:class => "form-horizontal"} do |f|
+        .control-group
+          = f.label(:email, :class => "control-label")
+          .controls
+            = f.text_field(:email, :class => "input-large")
+            %span.help-inline
+
+        .control-group
+          = f.label(:password, :class => "control-label")
+          .controls
+            = f.password_field(:password, :class => "input-medium")
+            %span.help-inline= t(".password_desc")
+
+        .control-group
+          = f.label(:password_confirmation, :class => "control-label")
+          .controls
+            = f.password_field(:password_confirmation, :class => "input-medium")
+            %span.help-inline
+
+        - if @account
+          = fields_for @account do |a|
+            .control-group
+              = a.label(:channel, :class => "control-label")
+              .controls
+                = a.text_field(:channel, :class => "input-small")
+                %span.help-inline= t(".channel_desc")
+
+            .control-group
+              = a.label(:steam_name, :class => "control-label")
+              .controls
+                = a.text_field(:steam_name, :class => "input-medium")
+                %span.help-inline= t(".steam_desc")
+
+
+            .control-group
+              = a.label(:note, :class => "control-label")
+              .controls
+                = a.text_area(:note, :class => "input-large")
+                %span.help-inline= t(".note_desc")
+
+            .control-group
+              = a.label(:haggle, :class => "control-label")
+              .controls
+                = a.select(:haggle, [[t("no"), false], [t("yes"), true]], {}, {:class => "input-mini"})
+                %span.help-inline= t(".haggle_desc")
+
+            .control-group
+              = a.label(:public, :class => "control-label")
+              .controls
+                = a.select(:public, [[t("no"), false], [t("yes"), true]], {}, {:class => "input-mini"})
+                %span.help-inline= t(".public_desc")
+
+
+
+        -#.control-group
+        -#  = f.label(:email_market, t(".receive_emails"), :class => "control-label")
+        -#  .controls
+        -#    = f.select(:email_market, [[t(".yes"), true], [t(".no"), false]], {}, :class => "input-small")
+        -#    %span.help-inline= t(".receive_emails_desc")
+
+        %input.btn.btn-success{:type => :submit, :value => t(".save"), "data-loading-text" => t(".saving")}
+

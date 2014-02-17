@@ -1,0 +1,15 @@
+-#.row
+-#  .span12
+-#    #logo
+-#      = image_tag("logo-full.png")
+
+.row
+  .span12
+    %h3.header
+      = @post.title
+      .posted= relative_time(@post.created_at, :ago)
+
+.row
+  .span12
+    .well.well-small.well-trimmed
+      %p!= @post.body

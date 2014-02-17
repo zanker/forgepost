@@ -1,0 +1,143 @@
+ForgePost.Helpers.Errors = {
+    // Unusual error we need to notify the user about
+    request_error: function(status) {
+        if( status == "0" ) return;
+
+        var color = "red";
+        if( status == "500" ) {
+            color = "text-error";
+        } else if( status == "400" ) {
+            color = "text-error";
+        }
+
+        $(".modal").modal("hide");
+        $("<div class='modal' id='critical-error'><div class='modal-header'><h3 class='" + color + "'>"+ I18n.t("js.request_error." + status + ".title") + "</h3></div><div class='modal-body'><p>" + I18n.t("js.request_error." + status + ".desc_1") + "</p><p>" + I18n.t("js.request_error." + status + ".desc_2", {email: "<a href='mailto:<%= CONFIG[:contact][:email] %>'><%= CONFIG[:contact][:email] %></a>"}) + "</p></div><div class='modal-footer'><input type='button' class='btn pull-left' value='" + I18n.t("js.dismiss") + "' data-dismiss='modal'></div></div>").modal({keyboard: false});
+    },
+
+
+    // Cleanup errors before we send the request
+    cleanup_errors: function(form) {
+        this.error_list = [];
+
+        var list = form.find(".control-group.error");
+        for( var i=0, total=list.length; i < total; i++ ) {
+            var group = $(list[i]);
+            var inline = group.find(".help-inline");
+            if( inline.length == 1 ) {
+                if( inline.data("orig-text") ) {
+                    inline.text(inline.data("orig-text"));
+                    inline.data("orig-text", null);
+                } else {
+                    inline.text("");
+                }
+            } else {
+                group.find(".tt").tooltip("disable").tooltip("hide");
+            }
+
+            group.removeClass("error");
+        }
+    },
+
+    display_error: function(scope, key, name, errors) {
+        var input = scope ? $("#" + scope + "_" + key) : $("#" + key);
+        // Try the more complicated search
+        if( scope && input.length == 0 ) {
+            input = $("." + key + "[data-id=" + scope + "]");
+        }
+
+        if( name != "" ) name += " ";
+
+        var element = input.closest(".control-group");
+        if( element.length == 1 ) {
+            element.addClass("error");
+
+            // We have inline text available, show it there
+            var inline = element.find(".help-inline");
+            if( inline.length == 1 ) {
+                inline.data("orig-text", inline.text());
+                inline.text(errors.join(", ").replace(", is", ", "));
+                return;
+            }
+
+            var block = element.find(".help-block");
+            if( block.length == 1 ) {
+                block.data("orig-text", block.text());
+                block.text(name + " " + errors.join(", ").replace(", is", ","));
+                return;
+            }
+
+            // We don't have inline, so fallback on tooltip
+            for( var i=0, total=errors.length; i < total; i++ ) {
+                errors[i] = name + errors[i];
+            }
+
+            if( input.hasClass("tt") ) {
+                input.attr("data-original-title", errors.join("<br>")).tooltip("enable");
+            } else {
+                input.addClass("tt");
+                input.tooltip({animation: false, trigger: "both", title: errors.join("<br>")});
+            }
+
+        // Can't find the element to put it into, so show it in a general list
+        } else {
+            for( var i=0, total=errors.length; i < total; i++ ) {
+                this.error_list.push("<li class='text-error'>" + name + errors[i] + "</li>");
+            }
+        }
+    },
+
+    traverse_errors: function(parent, errors, attributes, scope) {
+        for( var key in errors ) {
+            var value = errors[key];
+            // Embedded model
+            if( typeof(value) == "object" && typeof(value[0]) == "undefined" ) {
+                for( var child_key in value ) {
+                    var child_val = value[child_key];
+                    if( typeof(child_val) == "object" && typeof(child_val[0]) == "undefined" ) {
+                        var new_parent = parent + key + "_";
+                        if( !$.isNumeric(child_key) && child_key.length != 24 ) {
+                            new_parent += child_key + "_";
+                        } else {
+                            scope = child_key;
+                        }
+
+                        this.traverse_errors(new_parent, child_val, attributes, scope);
+                    } else {
+                        this.display_error(scope, parent + key + "_" + child_key, attributes[child_key], child_val);
+                    }
+                }
+                // Model root
+            } else {
+                this.display_error(scope, parent + key, attributes[key], value);
+            }
+        }
+    },
+
+    handle_errors: function(form, res) {
+        form.find("input[type='submit']").button("reset");
+        if( res.status == 500 ) return this.request_error(res.status);
+        this.cleanup_errors(form);
+
+        res = JSON.parse(res.responseText);
+
+        this.traverse_errors(res.scope + "_", res.errors, res.attributes);
+
+        // Focus the first error
+        form.find(".control-group.error").find("input:first,select:first").first().focus();
+
+        // Unscoped errors
+        if( this.error_list.length > 0 ) {
+            var html = "<h3 class='text-error'>" + I18n.t("js.form_errors") + "</h3><ul>" + this.error_list.join("") + "</ul>";
+
+            if( $("#error-list").length == 0 ) {
+                $("<div id='error-list' class='text-error'>" + html + "</div>").prependTo(form.find("form fieldset:first"));
+            } else {
+                $("#error-list").html(html);
+            }
+            $("#error-list").slideDown("fast");
+
+        } else {
+            $("#error-list").slideUp("fast");
+        }
+    }
+}

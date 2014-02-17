@@ -1,0 +1,41 @@
+common: &default_settings
+  license_key: '1234'
+
+  app_name: ForgePost
+
+  monitor_mode: true
+
+  developer_mode: false
+
+  log_level: info
+
+  ssl: true
+
+  audit_log:
+    enabled: false
+
+  error_collector:
+    enabled: false
+
+  capture_params: true
+
+  transaction_tracer:
+    enabled: false
+    transaction_threshold: apdex_f
+    record_sql: raw
+
+    stack_trace_threshold: 0.500
+
+development:
+  <<: *default_settings
+  monitor_mode: false
+  developer_mode: false
+
+test:
+  <<: *default_settings
+  monitor_mode: false
+  developer_mode: false
+
+production:
+  <<: *default_settings
+  monitor_mode: true

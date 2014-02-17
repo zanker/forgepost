@@ -1,0 +1,16 @@
+en:
+  references:
+    rarities:
+      rarities: Rarities
+      rarities_desc_1: Solforge's rarities are slightly different from most online games.
+      rarities_desc_2: It uses unusual names to describe rarities, the below are the rarities listed from rarests to most common.
+      rarity: Rarity
+      example: Example
+      desc: Description
+      cards: Cards
+      rarity_info:
+        "4": Rariest of all, these cards have unique effects making them much stronger than any other rarity of card.
+        "3": Second rariest type, you will fill these out before getting all of your Legendaries.
+        "2": Third rariest, easily obtainable through boosters for free and paid users.
+        "0": Most common rarity, easy to obtain, usually used to fill out a deck.
+        token: These are stand in cards that trigger from effects, tokens can never be put into a deck directly.

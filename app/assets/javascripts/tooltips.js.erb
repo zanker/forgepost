@@ -1,0 +1,189 @@
+(function(FP) {
+if( !FP.config.offsetX ) FP.config.offsetX = 20;
+if( !FP.config.offsetY ) FP.config.offsetY = -20;
+if( !FP.config.levels ) FP.config.levels = "3";
+if( !FP.config.scale ) FP.config.scale = 0.74;
+
+var tooltip, tooltip_active, tooltip_loading;
+var active_card_id, last_event;
+var cardOffsetX = 0, cardOffsetY = 0;
+
+var tooltip_width, tooltip_height;
+
+// Rendering
+function scale() {
+    tooltip[0].style["-webkit-transform"] = "scale(" + FP.config.scale + ")";
+    tooltip[0].style["-moz-transform"] = "scale(" + FP.config.scale + ")";
+    tooltip[0].style["-ms-transform"] = "scale(" + FP.config.scale + ")";
+    tooltip[0].style["-o-transform"] = "scale(" + FP.config.scale + ")";
+    tooltip[0].style["transform"] = "scale(" + FP.config.scale + ")";
+    tooltip[0].style["zoom"] = FP.config.scale + "\\9";
+}
+
+function reset_scale() {
+    tooltip[0].style["-webkit-transform"] = null;
+    tooltip[0].style["-moz-transform"] = null;
+    tooltip[0].style["-ms-transform"] = null;
+    tooltip[0].style["-o-transform"] = null;
+    tooltip[0].style["transform"] = null;
+    tooltip[0].style["zoom"] = null;
+    tooltip[0].style.width = null;
+}
+
+FP.tooltip_loaded = function(card_id, html) {
+    html = unescape(html.replace(/\+/g, " "));
+    html = $(html).hide();
+
+    var total_assets = 0, loaded_assets = 0;
+    function check_assets() {
+        if( active_card_id != card_id ) return;
+
+        loaded_assets += 1;
+        if( loaded_assets < total_assets ) return;
+
+        cardOffsetY = -240;
+
+        if( html.hasClass("card-set") ) {
+            var count = html.find(".full-game-card").length;
+            cardOffsetX = -(40 * count);
+            tooltip.addClass("multi");
+        } else {
+            cardOffsetX = -30;
+            tooltip.removeClass("multi");
+        }
+
+        scale();
+
+        tooltip_loading.hide();
+        tooltip.find(".card-set, .full-game-card").remove();
+
+        html.show().appendTo(tooltip);
+
+        tooltip_width = tooltip.width();
+        tooltip_height = tooltip.height();
+        mouse_move(last_event);
+    }
+
+    var assets = html.find("img");
+    total_assets = assets.length;
+    assets.load(check_assets);
+}
+
+// Loading
+var url = "<%= CONFIG[:full_domain] %>";
+
+function setup_tooltip() {
+    if( tooltip ) return;
+    tooltip = $("<div id='fp-card-tooltip'><div class='loading'><div class='indicator'></div><span>Loading...</span></div></div></div>");
+    tooltip_loading = tooltip.find(".loading");
+    tooltip.appendTo($("body"));
+}
+
+function show_loading() {
+    setup_tooltip();
+    cardOffsetX = 0, cardOffsetY = 0;
+
+    tooltip_active = true;
+    tooltip.show();
+
+    tooltip_width = tooltip.width() * 2;
+    tooltip_height = tooltip.height();
+}
+
+function hide_loading() {
+    tooltip.hide();
+}
+
+// Mouse enter
+var window_width, window_height;
+function mouse_enter(event) {
+    window_height = $(window).height();
+    window_width = $(window).width();
+
+    show_loading();
+    mouse_move(event);
+
+    active_card_id = $(this).data("fp-card-id");
+    var levels = $(this).data("fp-levels") || FP.config.levels;
+    $.ajax(url + "/card/tt-ext/" + active_card_id + "/" + levels + ".js", {
+        jsonp: false,
+        jsonpCallback: "$ForgePost.tooltip_loaded",
+        dataType: "jsonp",
+        cache: true,
+    });
+}
+
+function mouse_leave(event) {
+    if( !tooltip || !tooltip_active ) return;
+
+    hide_loading();
+    reset_scale();
+    tooltip_active = null;
+    active_card_id = null;
+
+    tooltip.find(".card-set, .full-game-card").remove();
+    tooltip_loading.show();
+}
+
+function mouse_move(event) {
+    last_event = event;
+
+    var top = (event.pageY + FP.config.offsetY + cardOffsetY);
+
+    // X
+    var left = (event.pageX + FP.config.offsetX + cardOffsetX);
+    if( (left + tooltip_width - 100) > window_width ) {
+        tooltip[0].style.left = null;
+        tooltip[0].style.right = (window_width - event.pageX) + cardOffsetX + FP.config.offsetX + "px";
+    } else {
+        tooltip[0].style.left = left + "px";
+        tooltip[0].style.right = null;
+    }
+
+    // Y
+    if( top <= 0 ) top = -80;
+    var bottom = window_height + $(window).scrollTop();
+
+    if( (top + tooltip_height) > bottom ) {
+        var diff = (event.pageY) - bottom;
+        top -= diff;
+        top -= (tooltip_height / 2);
+        top += FP.config.offsetX * 2;
+    }
+
+    tooltip[0].style.top = top + "px";
+}
+
+var loaded;
+function load_assets() {
+    if( loaded ) return;
+    loaded = true;
+
+    var tag = document.createElement("link");
+    tag.rel = "stylesheet";
+    tag.type = "text/css";
+    tag.href = url + "/assets/tooltips.css";
+    document.getElementsByTagName("head")[0].appendChild(tag);
+}
+
+FP.ScanHTML = function() {
+    load_assets();
+
+    $("a[href^='" + url + "']").each(function() {
+        var link = $(this);
+        if( link.data("fp-card-id") ) return;
+
+        var match = link.attr("href").match(/\/card\/([0-9]+)\//);
+        var card_id = match ? parseInt(match[1]) : 0;
+        if( !$.isNumeric(card_id) || card_id <= 0 ) return;
+
+        link.on("mouseenter", mouse_enter);
+        link.on("mouseleave", mouse_leave);
+        link.on("mousemove", mouse_move);
+        link.data("fp-card-id", card_id);
+    });
+};
+
+$(document).ready(FP.ScanHTML);
+
+})(typeof($ForgePost) == "undefined" ? ($ForgePost = {config: {}}) : $ForgePost);

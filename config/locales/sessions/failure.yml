@@ -1,0 +1,5 @@
+en:
+  sessions:
+    failure:
+      invalid_credentials: We could not login due to your credentials being invalid.
+      generic: Failed to login due to %{message}.

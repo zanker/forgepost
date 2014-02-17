@@ -1,0 +1,12 @@
+en:
+  deckbuilders:
+    deck_list:
+      login_register: You need to be logged in to load decks.
+      login_go: Registration only takes a second, {click here} to register or login. Don't worry, it'll open in a new window.
+      once_done: After you've saved a deck, come back to this dialog box to load your saved decks.
+      name: Name
+      load: Load
+      factions: Factions
+      save_deck_first: You need to save a deck first. Build a deck, click "Save Deck" and then you can load it using this page.
+      delete: Delete
+      deleting: Deleting...

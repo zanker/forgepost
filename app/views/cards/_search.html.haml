@@ -1,0 +1,102 @@
+.row#search
+  %form{:action => cards_index_path, :method => "POST"}
+    .span12
+      .well.well-small.well-trimmed
+        .span12
+          #factions.btn-group
+            - Card::FACTION_MAP.each do |faction, id|
+              %a.btn.btn-inverse{:class => @filters[:factions][id] ? :active : nil, "data-key" => faction}
+                %span{:class => "faction-#{id}"}= t("factions.#{id}")
+
+          #rarities.btn-group
+            - Card::RARITY_MAP.each do |id, rarity|
+              - next if Card::UNUSED_RARITIES[id]
+              %a.btn.btn-inverse{:class => @filters[:rarities][id] ? :active : nil, "data-key" => rarity}
+                %div{:class => "rarities rarity-#{Card::RARITY_IMAGE_MAPS[id]} size-20"}
+
+          - [:atk, :hp].each do |type|
+            %div{:id => type}
+              %label= t(".#{type}_full", :default => t(".#{type}"))
+              %input{:type => :text, :value => params["min_#{type}"], :placeholder => "0", :maxlength => 2}
+              %label.div -
+              %input{:type => :text, :value => params["max_#{type}"], :placeholder => "9", :maxlength => 2}
+
+        .clearfix
+
+        .span12
+          #levels.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t(".level_prefix")}
+                %span 1
+              %strong.caret
+            %ul.dropdown-menu
+              %li{:class => !@filters[:level] ? :active : nil}
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t(".levels_prefix")}= t("all")
+              %li.divider
+
+              - Card::LEVELS.each do |level|
+                %li{:class => @filters[:level] == level ? :active : nil}
+                  %a{:href => "#", "data-key" => level, "data-prefix" => t(".level_prefix")}= level
+
+          #set.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t(".sets_prefix")}
+                %span #{t("all")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li{:class => !@filters[:set] ? :active : nil}
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t(".sets_prefix")}= t("all")
+
+              - t("card_sets").each do |key, name|
+                - key = key.to_s.tr("_", ".")
+                %li{:class => @filters[:set] == key ? :active : nil}
+                  %a{:href => "#", "data-key" => key.tr(".", "-").gsub("set", "set-"), "data-prefix" => t(".sets_prefix")}= name
+
+          #categories.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t(".categories_prefix")}
+                %span #{t("all")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li{:class => !@filters[:category] ? :active : nil}
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t(".categories_prefix")}= t("all")
+
+              - @categories.each do |category_id, category|
+                %li{:class => @filters[:category] == category_id ? :active : nil}
+                  %a{:href => "#", "data-key" => category[:slug], "data-prefix" => t(".category_prefix")}= category[:name].titleize
+
+          #keywords.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}
+              %span
+                #{t(".keywords_prefix")}
+                %span #{t("any")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li{:class => !@filters[:keyword] ? :active : nil}
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t(".keywords_prefix")}= t("any")
+
+              - @keyword_info.each do |slug, text|
+                %li{:class => @filters[:keyword] == slug ? :active : nil}
+                  %a{:href => "#", "data-key" => slug, "data-prefix" => t(".keyword_prefix")}= text
+
+
+          #creatures.dropdown
+            %a.dropdown-toggle{"data-toggle" => :dropdown, :href => "#"}>
+              %span
+                #{t(".creatures_prefix")}
+                %span #{t("any")}
+              %strong.caret
+            %ul.dropdown-menu
+              %li{:class => !@filters[:creature] ? :active : nil}
+                %a{:href => "#", "data-key" => "all", "data-prefix" => t(".creatures_prefix")}= t("any")
+
+              - @creatures.each do |slug, text|
+                %li{:class => @filters[:creature] == slug ? :active : nil}
+                  %a{:href => "#", "data-key" => slug, "data-prefix" => t(".creature_prefix")}= text
+
+          %input.btn.btn-success{:type => :submit, :value => t(".search"), "data-loading-text" => t(".searching")}
+
+        .clearfix

@@ -1,0 +1,41 @@
+en:
+  deckbuilders:
+    index:
+      loading: Loading...
+      toggle_search: Toggle Search
+      refine_filter: We could not find any cards with the given criteria.
+      no_deck_cards: No cards have been added to the deck yet
+      total_cards: Total Cards
+      issues_contact: If you run into any problems, or have any questions. Just {send us an email} and will help you out.
+      search: Search
+      deck_export: Card List
+      export_card_list: Export Card List
+      plaintext: Plaintext
+      bbcode: BBCode
+      html: HTML
+      import_card_list: Import Cards
+      markdown_reddit: Markdown/Reddit
+      deck_import: Import Deck
+      enter_card_list: Paste a card list with quantities below and the deck will be imported.
+      import: Import
+      card_list: Enter card list...
+      sort_by: "Sort By:"
+      rarity_faction_name: Rarity > Faction
+      faction_rarity: Faction > Rarity
+      name: Name
+      attack: Attack
+      health: Health
+      help: Help
+      controls_click: Left click on cards to add them to the deck, Right click to remove.
+      keybindings: Keybindings
+      save_deck: Save Deck
+      deck_storage: Deck Management
+      deck_list: Deck List
+      bindings:
+        "1": Show level 1 cards
+        "2": Show level 2 cards
+        "3": Show level 3 cards
+        "a": Toggle Alloyin filter
+        "u": Toggle Uterra filter
+        "n": Toggle Nekrium filter
+        "t": Toggle Tempys filter

@@ -1,0 +1,34 @@
+en:
+  cards:
+    show:
+      name: Name
+      attack: Attack
+      faction: Faction
+      health: Health
+      desc: Description
+      flavor: Flavor
+      none: None
+      rarity: Rarity
+      history: History
+      version: Version
+      changes: Changes
+      age: Age
+      view: View
+      viewing_old: Below is the old version from %{version}
+      viewing_live: Below is from the live version
+      avg_hp: "Avg Health"
+      avg_stat: "%{avg}"
+      avg_attack: "Avg Attack"
+      all_cards: All Creatures
+      passives: Passives
+      abilities: Abilities
+      keywords: Keywords
+      category: Category
+      creature_type: Creature Type
+      image: Art
+      changed: Changed
+      added: Added
+      last_updated: Last Updated
+      avg_total:
+        one: "%{count} card"
+        other: "%{count} cards"

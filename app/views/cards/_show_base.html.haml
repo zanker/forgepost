@@ -1,0 +1,13 @@
+.row
+  .span12#info
+    %ul.nav.nav-tabs
+      %li{:class => !@alt && @live_card == @card ? :active : nil}= link_to(t(".card_live"), cards_path(@live_card.external_id, @live_card.name.parameterize))
+      - if @live_card.alt_image_ids?
+        %li{:class => @alt && @live_card == @card ? :active : nil}= link_to(t(".card_alt"), cards_show_alt_path(@live_card.external_id, @live_card.name.parameterize))
+      - @history.each do |history|
+        %li.tt{:class => history[:game_version] == @game_version ? :active : nil, :title => t(".total_changes", :count => history[:total_changes])}
+          = link_to(t(".card_old", :version => history[:game_version]), cards_show_old_path(@live_card.external_id, @live_card.name.parameterize, history[:game_version].parameterize))
+
+    = yield :header
+
+= body

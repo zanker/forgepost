@@ -1,0 +1,17 @@
+- {:week => [@product_week, @cards_week], :day => [@product_day, @cards_day]}.each do |type, (product, card_levels)|
+  - card = card_levels.first
+  .row
+    .span12
+      .well.well-small.well-trimmed
+        %h4
+          != product.title.gsub(card.name, link_to(card.name, self.send(@alt_cards[type] ? :cards_show_alt_path : :cards_path, card.external_id, card.name.parameterize), :class => :alt))
+          %span
+            = surround "(", ")" do
+              != format_price(product.prices.first)
+
+  .row.cards
+    - card_levels.each do |card|
+      .span4
+        = render :partial => "cards/full_card", :locals => {:card => card, :alt => @alt_cards[type]}
+
+    .clearfix

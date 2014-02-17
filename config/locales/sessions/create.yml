@@ -1,0 +1,6 @@
+en:
+  sessions:
+    create:
+      bad_provider: We do not currently support login from %{provider}.
+      bad_login: Sorry, we could not authenticate you. Please contact support at %{email}, thanks!
+      logged_in: You are now logged in!

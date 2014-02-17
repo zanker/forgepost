@@ -1,0 +1,9 @@
+en:
+  cards:
+    show_base:
+      card_live: Card (Live)
+      card_alt: Card (Alt Graphics)
+      card_old: Card (v%{version})
+      total_changes:
+        one: "%{count} change made"
+        other: "%{count} changes made"
